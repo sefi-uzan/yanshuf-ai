@@ -16,17 +16,17 @@ export function absoluteUrl(path: string) {
 }
 
 export function constructMetadata({
-  title = "Quill - the SaaS for students",
-  description = "Quill is an open-source software to make chatting to your PDF files easy.",
+  title = "Yanshuf.ai - the SaaS for QA",
+  description = "Yanshuf.ai is an open-source software to make testing easy",
   image = "/thumbnail.png",
   icons = "/favicon.ico",
-  noIndex = false
+  noIndex = false,
 }: {
-  title?: string
-  description?: string
-  image?: string
-  icons?: string
-  noIndex?: boolean
+  title?: string;
+  description?: string;
+  image?: string;
+  icons?: string;
+  noIndex?: boolean;
 } = {}): Metadata {
   return {
     title,
@@ -36,25 +36,25 @@ export function constructMetadata({
       description,
       images: [
         {
-          url: image
-        }
-      ]
+          url: image,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
       images: [image],
-      creator: "@joshtriedcoding"
+      creator: "@yanshuf-ai",
     },
     icons,
-    metadataBase: new URL('https://quill-jet.vercel.app'),
-    themeColor: '#FFF',
+    metadataBase: new URL("https://yanshuf-ai.vercel.app/"),
+    themeColor: "#FFF",
     ...(noIndex && {
       robots: {
         index: false,
-        follow: false
-      }
-    })
-  }
+        follow: false,
+      },
+    }),
+  };
 }
