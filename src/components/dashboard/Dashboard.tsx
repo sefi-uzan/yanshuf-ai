@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
-import { trpc } from '@/app/_trpc/client'
-import CreateChatButton from "./UploadButton";
+import { trpc } from "@/app/_trpc/client";
+import CreateChatButton from "./CreateChatButton";
 import { Ghost, Loader2, MessageSquare, Plus, Trash } from "lucide-react";
 import Skeleton from "react-loading-skeleton";
 import Link from "next/link";
 import { format } from "date-fns";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useState } from "react";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 
@@ -113,4 +113,4 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
   );
 };
 
-export default Dashboard
+export default Dashboard;

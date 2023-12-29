@@ -1,14 +1,14 @@
-import Link from 'next/link'
-import MaxWidthWrapper from './MaxWidthWrapper'
-import { buttonVariants } from './ui/button'
+import Link from "next/link";
+import MaxWidthWrapper from "../providers/MaxWidthWrapper";
+import { buttonVariants } from "../ui/button";
 import {
   LoginLink,
   RegisterLink,
   getKindeServerSession,
-} from '@kinde-oss/kinde-auth-nextjs/server'
-import { ArrowRight } from 'lucide-react'
-import UserAccountNav from './UserAccountNav'
-import MobileNav from './MobileNav'
+} from "@kinde-oss/kinde-auth-nextjs/server";
+import { ArrowRight } from "lucide-react";
+import UserAccountNav from "./UserAccountNav";
+import MobileNav from "./MobileNav";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 
 const Navbar = async () => {
@@ -87,4 +87,4 @@ const Navbar = async () => {
   );
 };
 
-export default Navbar
+export default Navbar;

@@ -1,14 +1,14 @@
-'use client'
+"use client";
 
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import { Button } from "../ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
-import { useToast } from "./ui/use-toast";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import { useToast } from "../ui/use-toast";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 import { Loader2 } from "lucide-react";
 
 const ChatCreation = () => {

@@ -1,5 +1,5 @@
-import BillingForm from "@/components/BillingForm";
-import YouTrackForm from "@/components/YouTrackForm";
+import BillingForm from "@/components/dashboard/settings/BillingForm";
+import YouTrackForm from "@/components/dashboard/settings/YouTrackForm";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 
 const Page = async () => {

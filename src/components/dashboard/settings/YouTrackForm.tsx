@@ -1,20 +1,20 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import MaxWidthWrapper from "./MaxWidthWrapper";
-import { Button } from "./ui/button";
+import MaxWidthWrapper from "../../providers/MaxWidthWrapper";
+import { Button } from "../../ui/button";
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+} from "../../ui/card";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import { trpc } from "@/app/_trpc/client";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "../../ui/use-toast";
 import { useEffect, useState } from "react";
 
 type YoutrackDetails = {

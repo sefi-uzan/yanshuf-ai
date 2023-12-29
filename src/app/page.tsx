@@ -1,8 +1,8 @@
-import MaxWidthWrapper from '@/components/MaxWidthWrapper'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import { buttonVariants } from '@/components/ui/button'
-import Image from 'next/image'
+import MaxWidthWrapper from "@/components/providers/MaxWidthWrapper";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -133,8 +133,8 @@ export default function Home() {
                 Start asking questions
               </span>
               <span className="mt-2 text-zinc-700">
-                It&apos;s that simple. Try out Yanshuf.ai today - it really takes
-                less than a minute.
+                It&apos;s that simple. Try out Yanshuf.ai today - it really
+                takes less than a minute.
               </span>
             </div>
           </li>

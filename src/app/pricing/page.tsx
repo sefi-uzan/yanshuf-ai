@@ -1,26 +1,21 @@
-import MaxWidthWrapper from '@/components/MaxWidthWrapper'
-import UpgradeButton from '@/components/UpgradeButton'
-import { buttonVariants } from '@/components/ui/button'
+import MaxWidthWrapper from "@/components/providers/MaxWidthWrapper";
+import UpgradeButton from "@/components/pricing/UpgradeButton";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { PLANS } from '@/config/stripe'
-import { cn } from '@/lib/utils'
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
-import {
-  ArrowRight,
-  Check,
-  HelpCircle,
-  Minus,
-} from 'lucide-react'
-import Link from 'next/link'
+} from "@/components/ui/tooltip";
+import { PLANS } from "@/config/stripe";
+import { cn } from "@/lib/utils";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { ArrowRight, Check, HelpCircle, Minus } from "lucide-react";
+import Link from "next/link";
 
 const Page = () => {
-  const { getUser } = getKindeServerSession()
-  const user = getUser()
+  const { getUser } = getKindeServerSession();
+  const user = getUser();
 
   const pricingItems = [
     {
@@ -36,7 +31,7 @@ const Page = () => {
         },
         {
           text: `${
-            PLANS.find((p) => p.slug === "free")!.fileSIze
+            PLANS.find((p) => p.slug === "free")!.fileSize
           }MB file size limit`,
           footnote: "The maximum file size of a single file.",
         },
@@ -218,6 +213,6 @@ const Page = () => {
       </MaxWidthWrapper>
     </>
   );
-}
+};
 
-export default Page
+export default Page;

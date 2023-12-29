@@ -1,30 +1,26 @@
-'use client'
+"use client";
 
-import { getUserSubscriptionPlan } from '@/lib/stripe'
-import { useToast } from './ui/use-toast'
-import { trpc } from '@/app/_trpc/client'
-import MaxWidthWrapper from './MaxWidthWrapper'
+import { getUserSubscriptionPlan } from "@/lib/stripe";
+import { useToast } from "../../ui/use-toast";
+import { trpc } from "@/app/_trpc/client";
+import MaxWidthWrapper from "../../providers/MaxWidthWrapper";
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from './ui/card'
-import { Button } from './ui/button'
-import { Loader2 } from 'lucide-react'
-import { format } from 'date-fns'
+} from "../../ui/card";
+import { Button } from "../../ui/button";
+import { Loader2 } from "lucide-react";
+import { format } from "date-fns";
 
 interface BillingFormProps {
-  subscriptionPlan: Awaited<
-    ReturnType<typeof getUserSubscriptionPlan>
-  >
+  subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
 }
 
-const BillingForm = ({
-  subscriptionPlan,
-}: BillingFormProps) => {
-  const { toast } = useToast()
+const BillingForm = ({ subscriptionPlan }: BillingFormProps) => {
+  const { toast } = useToast();
 
   const { mutate: createStripeSession, isLoading } =
     trpc.auth.createStripeSession.useMutation({
@@ -84,6 +80,6 @@ const BillingForm = ({
       </form>
     </MaxWidthWrapper>
   );
-}
+};
 
-export default BillingForm
+export default BillingForm;

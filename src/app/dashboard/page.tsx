@@ -1,6 +1,6 @@
-import Dashboard from '@/components/Dashboard'
-import DashboardNavigation from "@/components/DashboardNavigation";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import Dashboard from "@/components/dashboard/Dashboard";
+import DashboardNavigation from "@/components/dashboard/DashboardNavigation";
+import MaxWidthWrapper from "@/components/providers/MaxWidthWrapper";
 import { db } from "@/db";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -29,4 +29,4 @@ const Page = async () => {
   );
 };
 
-export default Page
+export default Page;

@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 const dashboardNavItems = [
   {
