@@ -17,25 +17,42 @@ import { trpc } from "@/app/_trpc/client";
 import { useToast } from "./ui/use-toast";
 import { useState } from "react";
 
+type YoutrackDetails = {
+  token: string;
+  baseUrl: string;
+};
 const YouTrackForm = () => {
-  const [token, setToken] = useState<string>("");
-  const { data, isLoading } = trpc.getUserYoutrackToken.useQuery();
+  const [youtrackDetails, setYoutrackDetails] = useState<YoutrackDetails>({
+    token: "",
+    baseUrl: "YouTrack base URL...",
+  });
+
+  const { data: credentials, isLoading: isTokenLoading } =
+    trpc.getUserYoutrackCredentials.useQuery();
+
+  const {
+    data: testCredentialsData,
+    isRefetching: isTestCredentialsLoading,
+    refetch,
+  } = trpc.testYoutrackCredentials.useQuery(undefined, {
+    enabled: false,
+  });
 
   const { toast } = useToast();
 
   const {
-    mutate: addUserYoutrackToken,
-    isLoading: addUserYoutrackTokenIsLoading,
-  } = trpc.addUserYoutrackToken.useMutation({
-    onSuccess: ({ token }) => {
-      if (token)
+    mutate: addUserYoutrackDetails,
+    isLoading: isUserYoutrackDetailsLoading,
+  } = trpc.addUserYoutrackDetails.useMutation({
+    onSuccess: ({ youtrackDetailsUpdated }) => {
+      if (youtrackDetailsUpdated)
         toast({
           title: "Token added successfully",
           description:
             "Click on Test Token if you want to make sure its working",
           variant: "default",
         });
-      if (!token) {
+      if (!youtrackDetailsUpdated) {
         toast({
           title: "There was a problem...",
           description: "Please try again in a moment",
@@ -45,13 +62,22 @@ const YouTrackForm = () => {
     },
   });
 
+  const testToken = async () => {
+    await refetch();
+    toast({
+      title: `Credentials test completed with a status of: ${testCredentialsData?.status}`,
+      description: `${testCredentialsData?.message}`,
+      variant: "default",
+    });
+  };
+
   return (
     <MaxWidthWrapper className="max-w-5xl">
       <Card>
         <CardHeader>
-          <CardTitle>YouTrack token</CardTitle>
+          <CardTitle>YouTrack integration</CardTitle>
           <CardDescription>
-            {data?.token
+            {credentials?.token
               ? "You have an active YouTrack Token"
               : "You do not have an active YouTrack token"}
           </CardDescription>
@@ -61,54 +87,83 @@ const YouTrackForm = () => {
           <Popover>
             <PopoverTrigger asChild>
               <Button>
-                {isLoading ? (
-                  <Loader2 className="mr-4 h-4 w-4 animate-spin" />
-                ) : null}
-                {data?.token ? "Modify Token" : "Add Token"}
+                {isTokenLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  "Modify Credentials"
+                )}
               </Button>
             </PopoverTrigger>
             <PopoverContent>
               <form
+                className="space-y-2"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  addUserYoutrackToken({ token });
+                  addUserYoutrackDetails({
+                    token: youtrackDetails.token,
+                    baseUrl: youtrackDetails.baseUrl,
+                  });
                 }}
               >
-                <div className="grid grid-cols-6 items-center gap-2">
+                <div className="grid grid-cols-3 items-center gap-2">
+                  <Label htmlFor="baseUrl" className="col-span-1">
+                    Base Url
+                  </Label>
+                  <Input
+                    id="baseUrl"
+                    value={youtrackDetails.baseUrl}
+                    className="col-span-2 h-8"
+                    type="text"
+                    onChange={(e) =>
+                      setYoutrackDetails((youtrackDetails) => ({
+                        ...youtrackDetails,
+                        baseUrl: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="grid grid-cols-3 items-center gap-2">
                   <Label htmlFor="token" className="col-span-1">
                     Token
                   </Label>
                   <Input
                     id="token"
-                    value={token}
-                    className="col-span-3 h-8"
+                    value={youtrackDetails.token}
+                    className="col-span-2 h-8"
                     type="password"
-                    onChange={(e) => setToken(e.target.value)}
+                    onChange={(e) =>
+                      setYoutrackDetails((youtrackDetails) => ({
+                        ...youtrackDetails,
+                        token: e.target.value,
+                      }))
+                    }
                   />
-                  <Button
-                    type="submit"
-                    variant="secondary"
-                    className="col-span-2"
-                  >
-                    {addUserYoutrackTokenIsLoading ? (
-                      <Loader2 className="mr-4 h-4 w-4 animate-spin" />
-                    ) : (
-                      "Submit"
-                    )}
-                  </Button>
                 </div>
+                <Button
+                  type="submit"
+                  variant="secondary"
+                  className="col-span-2"
+                >
+                  {isUserYoutrackDetailsLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
               </form>
             </PopoverContent>
           </Popover>
           <Button
             variant="outline"
             className="bg-lime-500"
-            disabled={!data?.token}
+            disabled={!credentials?.token}
+            onClick={() => testToken()}
           >
-            {isLoading ? (
-              <Loader2 className="mr-4 h-4 w-4 animate-spin" />
-            ) : null}
-            Test Token
+            {isTokenLoading || isTestCredentialsLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Test Token"
+            )}
           </Button>
         </CardFooter>
       </Card>

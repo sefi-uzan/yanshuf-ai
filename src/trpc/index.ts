@@ -14,6 +14,8 @@ import {
   stripe,
 } from '@/lib/stripe'
 import { PLANS } from '@/config/stripe'
+import axios from "axios";
+import { Youtrack } from "@/lib/youtrack";
 
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -51,7 +53,7 @@ export const appRouter = router({
     });
   }),
 
-  getUserYoutrackToken: privateProcedure.query(async ({ ctx }) => {
+  getUserYoutrackCredentials: privateProcedure.query(async ({ ctx }) => {
     const { userId } = ctx;
 
     const dbUser = await db.user.findFirst({
@@ -60,19 +62,40 @@ export const appRouter = router({
       },
     });
 
-    if (dbUser?.youtrackToken) return { token: true };
-    else return { token: false };
+    if (!dbUser) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    if (dbUser?.youtrackToken === "")
+      return { baseUrl: dbUser.youtrackBaseUrl, token: false };
+    else return { baseUrl: dbUser.youtrackBaseUrl, token: true };
   }),
 
-  addUserYoutrackToken: privateProcedure
+  testYoutrackCredentials: privateProcedure.query(async ({ ctx }) => {
+    const { userId } = ctx;
+
+    const dbUser = await db.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!dbUser || dbUser.youtrackToken === "")
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    const youtrack = new Youtrack(dbUser.youtrackBaseUrl, dbUser.youtrackToken);
+    const response = await youtrack.getProjcets();
+    return { status: response.status, message: response.statusText };
+  }),
+
+  addUserYoutrackDetails: privateProcedure
     .input(
       z.object({
         token: z.string(),
+        baseUrl: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       const { userId: id } = ctx;
-      const { token: youtrackToken } = input;
+      const { token: youtrackToken, baseUrl: youtrackBaseUrl } = input;
 
       if (!id) throw new TRPCError({ code: "UNAUTHORIZED" });
 
@@ -82,13 +105,15 @@ export const appRouter = router({
         },
         data: {
           youtrackToken,
+          youtrackBaseUrl,
         },
       });
 
       if (!updateUser) throw new TRPCError({ code: "UNAUTHORIZED" });
 
-      if (updateUser.youtrackToken) return { token: true };
-      else return { token: false };
+      if (updateUser.youtrackToken && updateUser.youtrackBaseUrl)
+        return { youtrackDetailsUpdated: true };
+      else return { youtrackDetailsUpdated: false };
     }),
 
   createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
