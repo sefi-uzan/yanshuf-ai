@@ -21,23 +21,23 @@ export const POST = async (req: NextRequest) => {
 
   if (!userId) return new Response("Unauthorized", { status: 401 });
 
-  const { fileId, message } = SendMessageValidator.parse(body);
+  const { chatId, message } = SendMessageValidator.parse(body);
 
-  const file = await db.file.findFirst({
+  const chat = await db.chat.findFirst({
     where: {
-      id: fileId,
+      id: chatId,
       userId,
     },
   });
 
-  if (!file) return new Response("Not found", { status: 404 });
+  if (!chat) return new Response("Not found", { status: 404 });
 
   await db.message.create({
     data: {
       text: message,
       isUserMessage: true,
       userId,
-      fileId,
+      chatId,
     },
   });
 
@@ -51,14 +51,14 @@ export const POST = async (req: NextRequest) => {
 
   const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
     pineconeIndex,
-    namespace: file.id,
+    namespace: chat.id,
   });
 
   const results = await vectorStore.similaritySearch(message, 4);
 
   const prevMessages = await db.message.findMany({
     where: {
-      fileId,
+      chatId,
     },
     orderBy: {
       createdAt: "asc",
@@ -109,7 +109,7 @@ export const POST = async (req: NextRequest) => {
         data: {
           text: completion,
           isUserMessage: false,
-          fileId,
+          chatId,
           userId,
         },
       });
@@ -117,4 +117,4 @@ export const POST = async (req: NextRequest) => {
   });
 
   return new StreamingTextResponse(stream);
-};
+}

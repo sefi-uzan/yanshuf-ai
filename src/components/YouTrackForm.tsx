@@ -15,7 +15,7 @@ import { Label } from "./ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { trpc } from "@/app/_trpc/client";
 import { useToast } from "./ui/use-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type YoutrackDetails = {
   token: string;
@@ -28,14 +28,30 @@ const YouTrackForm = () => {
   });
 
   const { data: credentials, isLoading: isTokenLoading } =
-    trpc.getUserYoutrackCredentials.useQuery();
+    trpc.youtrack.getUserYoutrackCredentials.useQuery();
 
   const {
     data: testCredentialsData,
     isRefetching: isTestCredentialsLoading,
+    isFetched,
     refetch,
-  } = trpc.testYoutrackCredentials.useQuery(undefined, {
+  } = trpc.youtrack.testYoutrackCredentials.useQuery(undefined, {
     enabled: false,
+    onSuccess: (testCredentialsData) => {
+      if (testCredentialsData.status === 200) {
+        toast({
+          title: `Credentials test completed with a status of: ${testCredentialsData?.status}`,
+          description: `${testCredentialsData?.message}`,
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: `Credentials test completed with a status of: ${testCredentialsData?.status}`,
+          description: `${testCredentialsData?.message}`,
+          variant: "destructive",
+        });
+      }
+    },
   });
 
   const { toast } = useToast();
@@ -43,7 +59,7 @@ const YouTrackForm = () => {
   const {
     mutate: addUserYoutrackDetails,
     isLoading: isUserYoutrackDetailsLoading,
-  } = trpc.addUserYoutrackDetails.useMutation({
+  } = trpc.youtrack.addUserYoutrackDetails.useMutation({
     onSuccess: ({ youtrackDetailsUpdated }) => {
       if (youtrackDetailsUpdated)
         toast({
@@ -64,12 +80,14 @@ const YouTrackForm = () => {
 
   const testToken = async () => {
     await refetch();
-    toast({
-      title: `Credentials test completed with a status of: ${testCredentialsData?.status}`,
-      description: `${testCredentialsData?.message}`,
-      variant: "default",
-    });
   };
+
+  useEffect(() => {
+    setYoutrackDetails((youtrackDetails) => ({
+      ...youtrackDetails,
+      baseUrl: credentials?.baseUrl || "YouTrack Base URL...",
+    }));
+  }, [credentials?.baseUrl]);
 
   return (
     <MaxWidthWrapper className="max-w-5xl">
@@ -114,12 +132,13 @@ const YouTrackForm = () => {
                     value={youtrackDetails.baseUrl}
                     className="col-span-2 h-8"
                     type="text"
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      e.preventDefault();
                       setYoutrackDetails((youtrackDetails) => ({
                         ...youtrackDetails,
                         baseUrl: e.target.value,
-                      }))
-                    }
+                      }));
+                    }}
                   />
                 </div>
                 <div className="grid grid-cols-3 items-center gap-2">
@@ -131,12 +150,13 @@ const YouTrackForm = () => {
                     value={youtrackDetails.token}
                     className="col-span-2 h-8"
                     type="password"
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      e.preventDefault();
                       setYoutrackDetails((youtrackDetails) => ({
                         ...youtrackDetails,
                         token: e.target.value,
-                      }))
-                    }
+                      }));
+                    }}
                   />
                 </div>
                 <Button
