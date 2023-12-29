@@ -83,11 +83,20 @@ const MobileNav = ({
                   </Link>
                 </li>
                 <li>
+                  <Link
+                    onClick={() => closeOnCurrent("/dashboard/settings")}
+                    className="flex items-center w-full font-semibold"
+                    href="/dashboard/settings"
+                  >
+                    Settings
+                  </Link>
+                </li>
+                <li>
                   {isSubscribed ? (
                     <Link
-                      onClick={() => closeOnCurrent("/dashboard/billing")}
+                      onClick={() => closeOnCurrent("/dashboard/settings")}
                       className="flex items-center w-full font-semibold"
-                      href="/dashboard/billing"
+                      href="/dashboard/settings"
                     >
                       Manage Subscription
                     </Link>

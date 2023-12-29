@@ -10,16 +10,15 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
 
 export async function getUserSubscriptionPlan() {
   const { getUser } = getKindeServerSession()
-  const user = getUser()
-  console.log(user);
+  const user = getUser();
 
-  if (!user.id) {
+  if (!user || !user.id) {
     return {
       ...PLANS[0],
       isSubscribed: false,
       isCanceled: false,
       stripeCurrentPeriodEnd: null,
-    }
+    };
   }
 
   const dbUser = await db.user.findFirst({
