@@ -54,7 +54,7 @@ const BillingForm = ({
             <CardTitle>Subscription Plan</CardTitle>
             <CardDescription>
               {subscriptionPlan.isSubscribed
-                ? `You are currently on the ${subscriptionPlan.name}{" "}
+                ? `You are currently on the ${subscriptionPlan.slug}{" "}
                 plan.`
                 : "You do not have an active subscription plan"}
             </CardDescription>
