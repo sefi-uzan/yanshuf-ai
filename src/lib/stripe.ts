@@ -11,6 +11,7 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
 export async function getUserSubscriptionPlan() {
   const { getUser } = getKindeServerSession()
   const user = getUser()
+  console.log(user);
 
   if (!user.id) {
     return {
