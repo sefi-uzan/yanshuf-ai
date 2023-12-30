@@ -6,34 +6,26 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <>
-      <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
-        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
-          <p className="text-sm font-semibold text-gray-700">
-            Yanshuf.ai is now live!
-          </p>
-        </div>
-        <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-          Enhance your <span className="text-blue-600">tests</span> in seconds.
-        </h1>
-        <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-          Yanshuf.ai is your very own QA agent, streamlining your QA proccesses
-          and helping you test better
-        </p>
+    <MaxWidthWrapper className="mb-12 mt-12 sm:mt-40 flex flex-col items-center justify-center text-center">
+      <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
+        Enhance your <span className="text-blue-600">tests</span> in seconds.
+      </h1>
+      <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
+        Yanshuf.ai is your very own QA agent, streamlining your QA proccesses
+        and helping you test better
+      </p>
 
-        <Link
-          className={buttonVariants({
-            size: "lg",
-            className: "mt-5",
-          })}
-          href="/dashboard"
-          target="_blank"
-        >
-          Get started <ArrowRight className="ml-2 h-5 w-5" />
-        </Link>
-      </MaxWidthWrapper>
+      <Link
+        className={buttonVariants({
+          size: "lg",
+          className: "mt-5",
+        })}
+        href="/dashboard"
+        target="_blank"
+      >
+        Get started <ArrowRight className="ml-2 h-5 w-5" />
+      </Link>
 
-      {/* value proposition section */}
       <div>
         <div className="relative isolate">
           <div
@@ -97,7 +89,7 @@ export default function Home() {
         {/* steps */}
         <ol className="my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0">
           <li className="md:flex-1">
-            <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
+            <div className="flex flex-col space-y-2 border-l-4 border-primary-foreground py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium text-blue-600">Step 1</span>
               <span className="text-xl font-semibold">
                 Sign up for an account
@@ -115,7 +107,7 @@ export default function Home() {
             </div>
           </li>
           <li className="md:flex-1">
-            <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
+            <div className="flex flex-col space-y-2 border-l-4 border-primary-foreground py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium text-blue-600">Step 2</span>
               <span className="text-xl font-semibold">
                 Integrate with your existing software
@@ -127,7 +119,7 @@ export default function Home() {
             </div>
           </li>
           <li className="md:flex-1">
-            <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
+            <div className="flex flex-col space-y-2 border-l-4 border-primary-foreground py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium text-blue-600">Step 3</span>
               <span className="text-xl font-semibold">
                 Start asking questions
@@ -155,6 +147,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </>
+    </MaxWidthWrapper>
   );
 }

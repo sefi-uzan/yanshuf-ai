@@ -42,7 +42,7 @@ const YouTrackForm = () => {
   };
 
   return (
-    <MaxWidthWrapper className="max-w-5xl">
+    <main className="mt-2 space-y-2">
       <Card>
         <CardHeader>
           <CardTitle>YouTrack integration</CardTitle>
@@ -99,7 +99,7 @@ const YouTrackForm = () => {
           <IssuesTable />
         </CardContent>
       </Card>
-    </MaxWidthWrapper>
+    </main>
   );
 };
 

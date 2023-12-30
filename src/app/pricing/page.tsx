@@ -101,13 +101,14 @@ const Page = () => {
               return (
                 <div
                   key={plan}
-                  className={cn("relative rounded-2xl bg-white shadow-lg", {
+                  className={cn("relative rounded-2xlshadow-lg", {
                     "border-2 border-blue-600 shadow-blue-200": plan === "Pro",
-                    "border border-gray-200": plan !== "Pro",
+                    "border-primary dark:border-secondary border-2":
+                      plan !== "Pro",
                   })}
                 >
                   {plan === "Pro" && (
-                    <div className="absolute -top-5 left-0 right-0 mx-auto w-32 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 px-3 py-2 text-sm font-medium text-white">
+                    <div className="absolute -top-5 left-0 right-0 mx-auto w-32 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 px-3 py-2 text-sm font-medium">
                       Upgrade now
                     </div>
                   )}
@@ -116,20 +117,20 @@ const Page = () => {
                     <h3 className="my-3 text-center font-display text-3xl font-bold">
                       {plan}
                     </h3>
-                    <p className="text-gray-500">{tagline}</p>
+                    <p className="">{tagline}</p>
                     <p className="my-5 font-display text-6xl font-semibold">
                       ${price}
                     </p>
-                    <p className="text-gray-500">per month</p>
+                    <p className="">per month</p>
                   </div>
 
-                  <div className="flex h-20 items-center justify-center border-b border-t border-gray-200 bg-gray-50">
+                  <div className="flex h-20 items-center justify-center border-b border-t">
                     <div className="flex items-center space-x-1">
                       <p>{quota.toLocaleString()} Queries/mo included</p>
 
                       <Tooltip delayDuration={300}>
                         <TooltipTrigger className="cursor-default ml-1.5">
-                          <HelpCircle className="h-4 w-4 text-zinc-500" />
+                          <HelpCircle className="h-4 w-4" />
                         </TooltipTrigger>
                         <TooltipContent className="w-80 p-2">
                           How many chat queries you can make a month.
@@ -143,23 +144,23 @@ const Page = () => {
                       <li key={text} className="flex space-x-5">
                         <div className="flex-shrink-0">
                           {negative ? (
-                            <Minus className="h-6 w-6 text-gray-300" />
+                            <Minus className="h-6 w-6 " />
                           ) : (
-                            <Check className="h-6 w-6 text-blue-500" />
+                            <Check className="h-6 w-6 " />
                           )}
                         </div>
                         {footnote ? (
                           <div className="flex items-center space-x-1">
                             <p
-                              className={cn("text-gray-600", {
-                                "text-gray-400": negative,
+                              className={cn("", {
+                                "": negative,
                               })}
                             >
                               {text}
                             </p>
                             <Tooltip delayDuration={300}>
                               <TooltipTrigger className="cursor-default ml-1.5">
-                                <HelpCircle className="h-4 w-4 text-zinc-500" />
+                                <HelpCircle className="h-4 w-4" />
                               </TooltipTrigger>
                               <TooltipContent className="w-80 p-2">
                                 {footnote}
@@ -168,8 +169,8 @@ const Page = () => {
                           </div>
                         ) : (
                           <p
-                            className={cn("text-gray-600", {
-                              "text-gray-400": negative,
+                            className={cn("", {
+                              "": negative,
                             })}
                           >
                             {text}
@@ -178,7 +179,7 @@ const Page = () => {
                       </li>
                     ))}
                   </ul>
-                  <div className="border-t border-gray-200" />
+                  <div className="border-t " />
                   <div className="p-5">
                     {plan === "Free" ? (
                       <Link

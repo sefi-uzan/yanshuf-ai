@@ -82,6 +82,8 @@ export const POST = async (req: NextRequest) => {
       {
         role: "user",
         content: `Use the following pieces of context (or previous conversaton if needed) to answer the users question in markdown format. \nIf you don't know the answer, just say that you don't know, don't try to make up an answer.
+                  You are an expert QA Engineer and you will help with QA tasks, in the context you have access to project tickets, all tickets contain an id, summary, description.
+                  You will be asked questions about these tickets
         
   \n----------------\n
   

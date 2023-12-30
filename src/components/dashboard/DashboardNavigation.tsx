@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { buttonVariants } from "../ui/button";
 
 const dashboardNavItems = [
   {
@@ -13,6 +14,10 @@ const dashboardNavItems = [
   {
     name: "Settings",
     href: "/dashboard/settings",
+  },
+  {
+    name: "Chat",
+    href: "/dashboard/:chatid",
   },
 ];
 
@@ -33,12 +38,11 @@ const DashboardNavigation = ({
             <Link
               href={item.href}
               key={item.href}
-              className={cn(
-                "flex h-7 items-center justify-center rounded-full pr-4 text-center text-sm transition-colors hover:text-primary",
+              className={
                 pathname === item.href
-                  ? "bg-muted font-medium text-primary"
-                  : "text-muted-foreground"
-              )}
+                  ? buttonVariants({ variant: "outline" })
+                  : buttonVariants({ variant: "secondary" })
+              }
             >
               {item.name}
             </Link>

@@ -4,6 +4,7 @@ import { ArrowRight, Gem, Menu } from "lucide-react";
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { ModeToggle } from "../ui/mode-toggle";
 
 const MobileNav = ({
   isAuth,
@@ -37,7 +38,7 @@ const MobileNav = ({
 
       {isOpen ? (
         <div className="fixed animate-in slide-in-from-top-5 fade-in-20 inset-0 z-0 w-full">
-          <ul className="absolute bg-white border-b border-zinc-200 shadow-xl grid w-full gap-3 px-10 pt-20 pb-8">
+          <ul className="absolute bg-white border-b border-primary-foreground shadow-xl grid w-full gap-3 px-10 pt-20 pb-8">
             {!isAuth ? (
               <>
                 <li>

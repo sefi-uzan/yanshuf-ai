@@ -37,48 +37,45 @@ const BillingForm = ({ subscriptionPlan }: BillingFormProps) => {
     });
 
   return (
-    <MaxWidthWrapper className="max-w-5xl">
-      <form
-        className="mt-12"
-        onSubmit={(e) => {
-          e.preventDefault();
-          createStripeSession();
-        }}
-      >
-        <Card>
-          <CardHeader>
-            <CardTitle>Subscription Plan</CardTitle>
-            <CardDescription>
-              {subscriptionPlan.isSubscribed
-                ? `You are currently on the ${subscriptionPlan.slug}{" "}
+    <form
+      className="mt-12"
+      onSubmit={(e) => {
+        e.preventDefault();
+        createStripeSession();
+      }}
+    >
+      <Card>
+        <CardHeader>
+          <CardTitle>Subscription Plan</CardTitle>
+          <CardDescription>
+            {subscriptionPlan.isSubscribed
+              ? `You are currently on the ${subscriptionPlan.slug}{" "}
                 plan.`
-                : "You do not have an active subscription plan"}
-            </CardDescription>
-          </CardHeader>
+              : "You do not have an active subscription plan"}
+          </CardDescription>
+        </CardHeader>
 
-          <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
-            <Button type="submit">
-              {isLoading ? (
-                <Loader2 className="mr-4 h-4 w-4 animate-spin" />
-              ) : null}
-              {subscriptionPlan.isSubscribed
-                ? "Manage Subscription"
-                : "Upgrade to PRO"}
-            </Button>
-
-            {subscriptionPlan.isSubscribed ? (
-              <p className="rounded-full text-xs font-medium">
-                {subscriptionPlan.isCanceled
-                  ? "Your plan will be canceled on "
-                  : "Your plan renews on "}
-                {format(subscriptionPlan.stripeCurrentPeriodEnd!, "dd.MM.yyyy")}
-                .
-              </p>
+        <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
+          <Button type="submit">
+            {isLoading ? (
+              <Loader2 className="mr-4 h-4 w-4 animate-spin" />
             ) : null}
-          </CardFooter>
-        </Card>
-      </form>
-    </MaxWidthWrapper>
+            {subscriptionPlan.isSubscribed
+              ? "Manage Subscription"
+              : "Upgrade to PRO"}
+          </Button>
+
+          {subscriptionPlan.isSubscribed ? (
+            <p className="rounded-full text-xs font-medium">
+              {subscriptionPlan.isCanceled
+                ? "Your plan will be canceled on "
+                : "Your plan renews on "}
+              {format(subscriptionPlan.stripeCurrentPeriodEnd!, "dd.MM.yyyy")}.
+            </p>
+          ) : null}
+        </CardFooter>
+      </Card>
+    </form>
   );
 };
 
