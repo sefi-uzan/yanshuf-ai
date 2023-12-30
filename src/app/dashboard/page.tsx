@@ -1,5 +1,5 @@
-import Dashboard from "@/components/dashboard/Dashboard";
-import DashboardNavigation from "@/components/dashboard/DashboardNavigation";
+import Dashboard from "@/components/dashboard/MyChats";
+import DashboardContext from "@/components/dashboard/DashboardContext";
 import MaxWidthWrapper from "@/components/providers/MaxWidthWrapper";
 import { db } from "@/db";
 import { getUserSubscriptionPlan } from "@/lib/stripe";

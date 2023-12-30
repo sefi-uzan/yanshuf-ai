@@ -37,6 +37,32 @@ const YouTrackForm = () => {
     },
   });
 
+  const [activeProject, setActiveProject] = useState<string>("0-1");
+
+  const issues = trpc.youtrack.getUserIssues.useQuery(
+    { projectId: activeProject },
+    {
+      enabled: false,
+      onSuccess: () => {
+        toast({
+          title: `Issues fetched successfully`,
+          variant: "default",
+        });
+      },
+      onError(err) {
+        toast({
+          title: "failed fetching issues",
+          description: `${err.message}`,
+          variant: "destructive",
+        });
+      },
+    }
+  );
+
+  const getIssues = async () => {
+    await issues.refetch();
+  };
+
   const getProjects = async () => {
     await refetchProjects();
   };
@@ -93,10 +119,24 @@ const YouTrackForm = () => {
       <Card>
         <CardHeader>
           <CardTitle>YouTrack Project Issues</CardTitle>
+          <Button
+            variant="outline"
+            className="bg-lime-500"
+            onClick={() => getIssues()}
+          >
+            {issues.isFetching ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Get Issues"
+            )}
+          </Button>
         </CardHeader>
 
         <CardContent className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
-          <IssuesTable />
+          <IssuesTable
+            issues={issues.data?.issues}
+            activeProject={activeProject}
+          />
         </CardContent>
       </Card>
     </main>

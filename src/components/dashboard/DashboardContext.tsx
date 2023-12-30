@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { buttonVariants } from "../ui/button";
+import { ReactNode } from "react";
 
 const dashboardNavItems = [
   {
@@ -15,33 +16,27 @@ const dashboardNavItems = [
     name: "Settings",
     href: "/dashboard/settings",
   },
-  {
-    name: "Chat",
-    href: "/dashboard/:chatid",
-  },
 ];
 
-interface DashboardNavigationProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+interface Props {
+  children: ReactNode;
+}
 
-const DashboardNavigation = ({
-  className,
-  ...props
-}: DashboardNavigationProps) => {
+const DashboardContext = ({ children }: Props) => {
   const pathname = usePathname();
 
   return (
     <div className="relative">
       <ScrollArea className="max-w-[600px] lg:max-w-none">
-        <div className={cn("flex items-center", className)} {...props}>
+        <div className="flex items-center">
           {dashboardNavItems.map((item) => (
             <Link
-              href={item.href}
+              href={`${item.href}`}
               key={item.href}
               className={
                 pathname === item.href
-                  ? buttonVariants({ variant: "outline" })
-                  : buttonVariants({ variant: "secondary" })
+                  ? buttonVariants({ variant: "secondary" })
+                  : buttonVariants({ variant: "ghost" })
               }
             >
               {item.name}
@@ -50,8 +45,9 @@ const DashboardNavigation = ({
         </div>
         <ScrollBar orientation="horizontal" className="invisible" />
       </ScrollArea>
+      {children}
     </div>
   );
 };
 
-export default DashboardNavigation;
+export default DashboardContext;

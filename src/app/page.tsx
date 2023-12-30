@@ -10,7 +10,7 @@ export default function Home() {
       <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
         Enhance your <span className="text-blue-600">tests</span> in seconds.
       </h1>
-      <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
+      <p className="mt-5 max-w-prose sm:text-lg">
         Yanshuf.ai is your very own QA agent, streamlining your QA proccesses
         and helping you test better
       </p>
@@ -77,10 +77,10 @@ export default function Home() {
       <div className="mx-auto mb-32 mt-32 max-w-5xl sm:mt-56">
         <div className="mb-12 px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center">
-            <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
+            <h2 className="mt-2 font-bold text-4xl sm:text-5xl">
               Start testing in minutes
             </h2>
-            <p className="mt-4 text-lg text-gray-600">
+            <p className="mt-4 text-lg">
               Testing has never been easier than with Yanshuf.ai.
             </p>
           </div>
@@ -94,7 +94,7 @@ export default function Home() {
               <span className="text-xl font-semibold">
                 Sign up for an account
               </span>
-              <span className="mt-2 text-zinc-700">
+              <span className="mt-2 ">
                 Either starting out with a free plan or choose our{" "}
                 <Link
                   href="/pricing"
@@ -112,7 +112,7 @@ export default function Home() {
               <span className="text-xl font-semibold">
                 Integrate with your existing software
               </span>
-              <span className="mt-2 text-zinc-700">
+              <span className="mt-2 ">
                 We&apos;ll process all your information and make it ready for
                 you to chat about.
               </span>
@@ -124,7 +124,7 @@ export default function Home() {
               <span className="text-xl font-semibold">
                 Start asking questions
               </span>
-              <span className="mt-2 text-zinc-700">
+              <span className="mt-2 ">
                 It&apos;s that simple. Try out Yanshuf.ai today - it really
                 takes less than a minute.
               </span>
