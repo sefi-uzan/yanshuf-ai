@@ -21,7 +21,7 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
 
   const utils = trpc.useUtils();
 
-  const { data: files, isLoading } = trpc.chats.getUserChats.useQuery();
+  const { data: chats, isLoading } = trpc.chats.getUserChats.useQuery();
 
   const { mutate: deleteFile } = trpc.chats.deleteChat.useMutation({
     onSuccess: () => {
@@ -43,10 +43,9 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
         <CreateChatButton isSubscribed={subscriptionPlan.isSubscribed} />
       </div>
 
-      {/* display all user files */}
-      {files && files?.length !== 0 ? (
+      {chats && chats?.length !== 0 ? (
         <ul className="mt-8 grid grid-cols-1 gap-6 divide-y divide-zinc-200 md:grid-cols-2 lg:grid-cols-3">
-          {files
+          {chats
             .sort(
               (a, b) =>
                 new Date(b.createdAt).getTime() -

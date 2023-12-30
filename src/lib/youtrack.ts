@@ -1,3 +1,4 @@
+import { Issues, Projects } from "@/types/types";
 import axios, { AxiosInstance } from "axios";
 export class Youtrack {
   baseUrl: string;
@@ -17,11 +18,13 @@ export class Youtrack {
   }
 
   async getProjcets() {
-    return await this.axios.get("/api/admin/projects?fields=id,shortName");
+    return await this.axios.get<Projects[]>(
+      "/api/admin/projects?fields=id,shortName"
+    );
   }
 
   async getProjcetIssues(projectId: string) {
-    return await this.axios.get(
+    return await this.axios.get<Issues[]>(
       `/api/admin/projects/${projectId}/issues?fields=id,type,description,summary`
     );
   }

@@ -21,7 +21,7 @@ export const youtrackRouter = router({
     else return { baseUrl: dbUser.youtrackBaseUrl, token: true };
   }),
 
-  testYoutrackCredentials: privateProcedure.query(async ({ ctx }) => {
+  getUserProjects: privateProcedure.query(async ({ ctx }) => {
     const { userId } = ctx;
 
     const dbUser = await db.user.findFirst({
@@ -35,10 +35,36 @@ export const youtrackRouter = router({
 
     const youtrack = new Youtrack(dbUser.youtrackBaseUrl, dbUser.youtrackToken);
     const response = await youtrack.getProjcets();
-    return { status: response.status, message: response.statusText };
+    return { projects: response.data };
   }),
 
-  addUserYoutrackDetails: privateProcedure
+  getUserIssues: privateProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { userId } = ctx;
+
+      const dbUser = await db.user.findFirst({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (!dbUser || dbUser.youtrackToken === "")
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      const youtrack = new Youtrack(
+        dbUser.youtrackBaseUrl,
+        dbUser.youtrackToken
+      );
+      const response = await youtrack.getProjcetIssues(input.projectId);
+      return { issues: response.data };
+    }),
+
+  addUserYoutrackCredentials: privateProcedure
     .input(
       z.object({
         token: z.string(),
