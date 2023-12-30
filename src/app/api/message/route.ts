@@ -10,8 +10,6 @@ import { OpenAIStream, StreamingTextResponse } from "ai";
 import { Pinecone } from "@pinecone-database/pinecone";
 
 export const POST = async (req: NextRequest) => {
-  // endpoint for asking a question to a pdf file
-
   const body = await req.json();
 
   const { getUser } = getKindeServerSession();
@@ -117,4 +115,4 @@ export const POST = async (req: NextRequest) => {
   });
 
   return new StreamingTextResponse(stream);
-}
+};

@@ -2,7 +2,14 @@
 
 import { trpc } from "@/app/_trpc/client";
 import CreateChatButton from "./CreateChatButton";
-import { Ghost, Loader2, MessageSquare, Plus, Trash } from "lucide-react";
+import {
+  FolderSync,
+  Ghost,
+  Loader2,
+  MessageSquare,
+  Plus,
+  Trash,
+} from "lucide-react";
 import Skeleton from "react-loading-skeleton";
 import Link from "next/link";
 import { format } from "date-fns";
@@ -15,7 +22,10 @@ interface PageProps {
 }
 
 const Dashboard = ({ subscriptionPlan }: PageProps) => {
-  const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<
+  const [currentlyDeletingChat, setCurrentlyDeletingChat] = useState<
+    string | null
+  >(null);
+  const [currentlySyncingChat, setCurrentlySyncingChat] = useState<
     string | null
   >(null);
 
@@ -23,22 +33,34 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
 
   const { data: chats, isLoading } = trpc.chats.getUserChats.useQuery();
 
-  const { mutate: deleteFile } = trpc.chats.deleteChat.useMutation({
+  const { mutate: deleteChat } = trpc.chats.deleteChat.useMutation({
     onSuccess: () => {
       utils.chats.getUserChats.invalidate();
     },
     onMutate({ id }) {
-      setCurrentlyDeletingFile(id);
+      setCurrentlyDeletingChat(id);
     },
     onSettled() {
-      setCurrentlyDeletingFile(null);
+      setCurrentlyDeletingChat(null);
+    },
+  });
+
+  const { mutate: syncChat } = trpc.chats.syncChat.useMutation({
+    onSuccess: () => {
+      utils.chats.getUserChats.invalidate();
+    },
+    onMutate({ id }) {
+      setCurrentlySyncingChat(id);
+    },
+    onSettled() {
+      setCurrentlySyncingChat(null);
     },
   });
 
   return (
     <main className="mx-auto max-w-7xl md:p-10">
       <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
-        <h1 className="mb-3 font-bold text-5xl text-gray-900">My Files</h1>
+        <h1 className="mb-3 font-bold text-5xl text-gray-900">My chats</h1>
 
         <CreateChatButton isSubscribed={subscriptionPlan.isSubscribed} />
       </div>
@@ -51,13 +73,13 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
                 new Date(b.createdAt).getTime() -
                 new Date(a.createdAt).getTime()
             )
-            .map((file) => (
+            .map((chat) => (
               <li
-                key={file.id}
+                key={chat.id}
                 className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition hover:shadow-lg"
               >
                 <Link
-                  href={`/dashboard/${file.id}`}
+                  href={`/dashboard/${chat.id}`}
                   className="flex flex-col gap-2"
                 >
                   <div className="pt-6 px-6 flex w-full items-center justify-between space-x-6">
@@ -65,7 +87,7 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
                     <div className="flex-1 truncate">
                       <div className="flex items-center space-x-3">
                         <h3 className="truncate text-lg font-medium text-zinc-900">
-                          {file.name}
+                          {chat.name}
                         </h3>
                       </div>
                     </div>
@@ -74,22 +96,29 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
 
                 <div className="px-6 mt-4 grid grid-cols-3 place-items-center py-2 gap-6 text-xs text-zinc-500">
                   <div className="flex items-center gap-2">
-                    <Plus className="h-4 w-4" />
-                    {format(new Date(file.createdAt), "MMM yyyy")}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4" />
-                    mocked
+                    {format(new Date(chat.createdAt), "MMM yyyy")}
                   </div>
 
                   <Button
-                    onClick={() => deleteFile({ id: file.id })}
+                    onClick={() => syncChat({ id: chat.id })}
+                    size="sm"
+                    className="w-full"
+                    variant="default"
+                  >
+                    {currentlySyncingChat === chat.id ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <FolderSync className="h-4 w-4" />
+                    )}
+                  </Button>
+
+                  <Button
+                    onClick={() => deleteChat({ id: chat.id })}
                     size="sm"
                     className="w-full"
                     variant="destructive"
                   >
-                    {currentlyDeletingFile === file.id ? (
+                    {currentlyDeletingChat === chat.id ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
                       <Trash className="h-4 w-4" />
