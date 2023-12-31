@@ -31,14 +31,11 @@ const MobileNav = ({
 
   return (
     <div className="sm:hidden">
-      <Menu
-        onClick={toggleOpen}
-        className="relative z-50 h-5 w-5 text-zinc-700"
-      />
+      <Menu onClick={toggleOpen} className="relative z-50 h-5 w-5" />
 
       {isOpen ? (
         <div className="fixed animate-in slide-in-from-top-5 fade-in-20 inset-0 z-0 w-full">
-          <ul className="absolute bg-white border-b border-primary-foreground shadow-xl grid w-full gap-3 px-10 pt-20 pb-8">
+          <ul className="absoluteborder-b border-primary-foreground shadow-xl grid w-full gap-3 px-10 pt-20 pb-8 bg-background">
             {!isAuth ? (
               <>
                 <li>

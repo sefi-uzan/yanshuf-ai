@@ -3,10 +3,10 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-import { buttonVariants } from "../ui/button";
+import { ScrollArea, ScrollBar } from "../../ui/scroll-area";
+import { buttonVariants } from "../../ui/button";
 import { ReactNode } from "react";
-import { Card } from "../ui/card";
+import { Card } from "../../ui/card";
 
 const dashboardNavItems = [
   {
@@ -31,7 +31,7 @@ interface Props {
   children: ReactNode;
 }
 
-const DashboardContext = ({ children }: Props) => {
+const DashboardNav = ({ children }: Props) => {
   const pathname = usePathname();
 
   return (
@@ -59,4 +59,4 @@ const DashboardContext = ({ children }: Props) => {
   );
 };
 
-export default DashboardContext;
+export default DashboardNav;

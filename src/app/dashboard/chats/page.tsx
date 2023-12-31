@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Button } from "@/components/ui/button";
-import CreateChatButton from "@/components/dashboard/CreateChatButton";
+import CreateChatButton from "@/components/dashboard/chats/CreateChatButton";
 
 const Page = () => {
   const [currentlyDeletingChat, setCurrentlyDeletingChat] = useState<
@@ -68,7 +68,7 @@ const Page = () => {
                 className="col-span-1 divide-y divide-secondary rounded-lg bg-primary-foreground shadow transition hover:shadow-lg border-2 border-secondary"
               >
                 <Link
-                  href={`/dashboard/${chat.id}`}
+                  href={`/dashboard/chats/${chat.id}`}
                   className="flex flex-col gap-2"
                 >
                   <div className="pt-6 px-6 flex w-full items-center justify-between space-x-6">
