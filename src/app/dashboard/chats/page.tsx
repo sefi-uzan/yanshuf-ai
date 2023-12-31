@@ -1,27 +1,16 @@
 "use client";
 
 import { trpc } from "@/app/_trpc/client";
-import CreateChatButton from "./CreateChatButton";
-import {
-  FolderSync,
-  Ghost,
-  Loader2,
-  MessageSquare,
-  Plus,
-  Trash,
-} from "lucide-react";
-import Skeleton from "react-loading-skeleton";
-import Link from "next/link";
-import { format } from "date-fns";
-import { Button } from "../ui/button";
-import { useState } from "react";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
+import { format } from "date-fns";
+import { FolderSync, Ghost, Loader2, Trash } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import { Button } from "@/components/ui/button";
+import CreateChatButton from "@/components/dashboard/CreateChatButton";
 
-interface PageProps {
-  subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
-}
-
-const Dashboard = ({ subscriptionPlan }: PageProps) => {
+const Page = () => {
   const [currentlyDeletingChat, setCurrentlyDeletingChat] = useState<
     string | null
   >(null);
@@ -62,7 +51,7 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
       <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-primary-foreground pb-5 sm:flex-row sm:items-center sm:gap-0">
         <h1 className="mb-3 font-bold text-5xl ">My chats</h1>
 
-        <CreateChatButton isSubscribed={subscriptionPlan.isSubscribed} />
+        <CreateChatButton />
       </div>
 
       {chats && chats?.length !== 0 ? (
@@ -134,11 +123,11 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
         <div className="mt-16 flex flex-col items-center gap-2">
           <Ghost className="h-8 w-8" />
           <h3 className="font-semibold text-xl">Pretty empty around here</h3>
-          <p>Let&apos;s upload your first PDF.</p>
+          <p>Let&apos;s create your first chat.</p>
         </div>
       )}
     </main>
   );
 };
 
-export default Dashboard;
+export default Page;

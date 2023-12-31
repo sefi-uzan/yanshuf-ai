@@ -1,6 +1,3 @@
-import Dashboard from "@/components/dashboard/MyChats";
-import DashboardContext from "@/components/dashboard/DashboardContext";
-import MaxWidthWrapper from "@/components/providers/MaxWidthWrapper";
 import { db } from "@/db";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -22,11 +19,7 @@ const Page = async () => {
 
   const subscriptionPlan = await getUserSubscriptionPlan();
 
-  return (
-    <>
-      <Dashboard subscriptionPlan={subscriptionPlan} />
-    </>
-  );
+  return <></>;
 };
 
 export default Page;

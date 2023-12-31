@@ -6,11 +6,20 @@ import { usePathname } from "next/navigation";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { buttonVariants } from "../ui/button";
 import { ReactNode } from "react";
+import { Card } from "../ui/card";
 
 const dashboardNavItems = [
   {
     name: "Dashboard",
     href: "/dashboard",
+  },
+  {
+    name: "Chats",
+    href: "/dashboard/chats",
+  },
+  {
+    name: "Integrations",
+    href: "/dashboard/integrations",
   },
   {
     name: "Settings",
@@ -45,7 +54,7 @@ const DashboardContext = ({ children }: Props) => {
         </div>
         <ScrollBar orientation="horizontal" className="invisible" />
       </ScrollArea>
-      {children}
+      <Card>{children}</Card>
     </div>
   );
 };

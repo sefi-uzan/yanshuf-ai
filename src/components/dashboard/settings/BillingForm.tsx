@@ -38,7 +38,6 @@ const BillingForm = ({ subscriptionPlan }: BillingFormProps) => {
 
   return (
     <form
-      className="mt-12"
       onSubmit={(e) => {
         e.preventDefault();
         createStripeSession();
