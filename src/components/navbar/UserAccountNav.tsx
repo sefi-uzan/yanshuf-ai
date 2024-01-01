@@ -1,4 +1,8 @@
-import { getUserSubscriptionPlan } from "@/lib/stripe";
+"use client";
+
+import Image from "next/image";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,29 +10,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import Image from "next/image";
-import { Icons } from "../ui/Icons";
-import Link from "next/link";
-import { Gem } from "lucide-react";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/server";
+import NavbarItem from "./NavbarItem.";
+import { navbarItems } from "./NavbarItems";
+import { useSetOpen } from "../hooks/useSetOpen";
 
 interface UserAccountNavProps {
   email: string | undefined;
   name: string;
   imageUrl: string;
+  isSubscribed: boolean;
 }
 
-const UserAccountNav = async ({
+const UserAccountNav = ({
   email,
   imageUrl,
   name,
+  isSubscribed,
 }: UserAccountNavProps) => {
-  const subscriptionPlan = await getUserSubscriptionPlan();
+  const { open, setOpen } = useSetOpen();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild className="overflow-visible">
         <Button className="rounded-full h-8 w-8 aspect-square">
           <Avatar className="relative w-8 h-8">
@@ -57,38 +59,28 @@ const UserAccountNav = async ({
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="mt-2" align="end">
-        <div className="flex items-center justify-start gap-2 p-2">
+        <div className="flex items-center justify-start gap-2 p-2 ">
           <div className="flex flex-col space-y-0.5 leading-none">
             {name && <p className="font-medium text-sm">{name}</p>}
             {email && <p className="w-[200px] truncate text-xs">{email}</p>}
           </div>
         </div>
-
         <DropdownMenuSeparator />
-
-        <DropdownMenuItem className="cursor-pointer" asChild>
-          <Link href="/dashboard">Dashboard</Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem className="cursor-pointer" asChild>
-          <Link href="/dashboard/settings">Settings</Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem className="cursor-pointer" asChild>
-          {subscriptionPlan?.isSubscribed ? (
-            <Link href="/dashboard/settings">Manage Subscription</Link>
-          ) : (
-            <Link href="/pricing">
-              Upgrade <Gem className="text-blue-600 h-4 w-4 ml-1.5" />
-            </Link>
-          )}
-        </DropdownMenuItem>
-
+        {navbarItems.map((item) => {
+          return item.private ? (
+            <DropdownMenuItem key={item.name} className="cursor-pointer">
+              {isSubscribed && item.subscribed ? (
+                <NavbarItem
+                  name={item.subscribed.name}
+                  href={item.subscribed.href}
+                />
+              ) : (
+                <NavbarItem name={item.name} href={item.href} />
+              )}
+            </DropdownMenuItem>
+          ) : null;
+        })}
         <DropdownMenuSeparator />
-
-        <DropdownMenuItem className="cursor-pointer">
-          <LogoutLink>Sign out</LogoutLink>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

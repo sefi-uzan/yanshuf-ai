@@ -1,16 +1,13 @@
+import { getUserSubscriptionPlan } from "@/lib/stripe";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 import MaxWidthWrapper from "../providers/MaxWidthWrapper";
 import { buttonVariants } from "../ui/button";
-import {
-  LoginLink,
-  RegisterLink,
-  getKindeServerSession,
-} from "@kinde-oss/kinde-auth-nextjs/server";
-import { ArrowRight } from "lucide-react";
-import UserAccountNav from "./UserAccountNav";
-import MobileNav from "./MobileNav";
-import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { ModeToggle } from "../ui/mode-toggle";
+import MobileNav from "./MobileNav";
+import NavbarItem from "./NavbarItem.";
+import { navbarItems } from "./NavbarItems";
+import UserAccountNav from "./UserAccountNav";
 
 const Navbar = async () => {
   const { getUser } = getKindeServerSession();
@@ -24,44 +21,40 @@ const Navbar = async () => {
           <Link href="/" className="flex z-40 font-semibold">
             <span>Yanshuf.ai</span>
           </Link>
-          <div className="flex items-center justify-between gap-x-2">
-            <MobileNav
-              isAuth={!!user}
-              isSubscribed={subscriptionPlan?.isSubscribed}
-            />
-          </div>
-
-          <div className="hidden items-center space-x-4 sm:flex">
+          <div className="sm:hidden flex items-center justify-between gap-x-2">
             <ModeToggle />
             {!user ? (
+              <MobileNav />
+            ) : (
+              <UserAccountNav
+                name={
+                  !user.given_name || !user.family_name
+                    ? "Your Account"
+                    : `${user.given_name} ${user.family_name}`
+                }
+                email={user.email ?? ""}
+                imageUrl={user.picture ?? ""}
+                isSubscribed={subscriptionPlan?.isSubscribed}
+              />
+            )}
+          </div>
+          <div className="hidden items-center space-x-4 sm:flex">
+            {!user ? (
               <>
-                <Link
-                  href="/pricing"
-                  className={buttonVariants({
-                    variant: "ghost",
-                    size: "sm",
-                  })}
-                >
-                  Pricing
-                </Link>
-                <LoginLink
-                  className={buttonVariants({
-                    variant: "ghost",
-                    size: "sm",
-                  })}
-                >
-                  Sign in
-                </LoginLink>
-                <RegisterLink
-                  className={buttonVariants({
-                    size: "sm",
-                  })}
-                >
-                  Get started <ArrowRight className="ml-1.5 h-5 w-5" />
-                </RegisterLink>
+                <ModeToggle />
+                {navbarItems.map((item) => {
+                  return !item.private ? (
+                    <NavbarItem
+                      key={item.name}
+                      name={item.name}
+                      href={item.href}
+                    />
+                  ) : null;
+                })}
               </>
             ) : (
               <>
+                <ModeToggle />
                 <Link
                   href="/dashboard"
                   className={buttonVariants({
@@ -80,6 +73,7 @@ const Navbar = async () => {
                   }
                   email={user.email ?? ""}
                   imageUrl={user.picture ?? ""}
+                  isSubscribed={subscriptionPlan?.isSubscribed}
                 />
               </>
             )}

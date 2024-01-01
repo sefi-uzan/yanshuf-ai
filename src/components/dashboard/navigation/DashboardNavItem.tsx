@@ -1,5 +1,6 @@
 "use client";
 
+import { useSetOpen } from "@/components/hooks/useSetOpen";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -8,15 +9,15 @@ type DashboardNavItem = {
     href: string;
     name: string;
   };
-  closeOnCurrent?: (href: string) => void;
 };
 
-const DashboardNavItem = ({ item, closeOnCurrent }: DashboardNavItem) => {
+const DashboardNavItem = ({ item }: DashboardNavItem) => {
   const pathname = usePathname();
+  const { setOpen } = useSetOpen();
 
   return (
     <Link
-      onClick={() => closeOnCurrent && closeOnCurrent(item.href)}
+      onClick={() => setOpen(false)}
       href={`${item.href}`}
       key={item.href}
       className={

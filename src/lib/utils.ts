@@ -13,6 +13,8 @@ export function absoluteUrl(path: string) {
   return `http://localhost:${process.env.PORT ?? 3000}/${path}`;
 }
 
+const closeOnCurrent = (href: string, pathname: string) => {};
+
 export function constructMetadata({
   title = "Yanshuf.ai - the SaaS for QA",
   description = "Yanshuf.ai is an open-source software to make testing easy",

@@ -1,129 +1,39 @@
-'use client'
+"use client";
 
-import { ArrowRight, Gem, Menu } from "lucide-react";
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { ModeToggle } from "../ui/mode-toggle";
+import { Menu } from "lucide-react";
+import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import NavbarItem from "./NavbarItem.";
+import { navbarItems } from "./NavbarItems";
+import { useSetOpen } from "../hooks/useSetOpen";
 
-const MobileNav = ({
-  isAuth,
-  isSubscribed,
-}: {
-  isAuth: boolean;
-  isSubscribed: boolean;
-}) => {
-  const [isOpen, setOpen] = useState<boolean>(false);
-
-  const toggleOpen = () => setOpen((prev) => !prev);
-
-  const pathname = usePathname();
-
-  useEffect(() => {
-    if (isOpen) toggleOpen();
-  }, [pathname]);
-
-  const closeOnCurrent = (href: string) => {
-    if (pathname === href) {
-      toggleOpen();
-    }
-  };
+const MobileNav = () => {
+  const { open, setOpen } = useSetOpen();
 
   return (
-    <div className="sm:hidden">
-      <Menu onClick={toggleOpen} className="relative z-50 h-5 w-5" />
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild className="overflow-visible">
+        <Menu onClick={() => {}} className="relative z-50 h-5 w-5" />
+      </DropdownMenuTrigger>
 
-      {isOpen ? (
-        <div className="fixed animate-in slide-in-from-top-5 fade-in-20 inset-0 z-0 w-full">
-          <ul className="absoluteborder-b border-primary-foreground shadow-xl grid w-full gap-3 px-10 pt-20 pb-8 bg-background">
-            {!isAuth ? (
-              <>
-                <li>
-                  <Link
-                    onClick={() => closeOnCurrent("/sign-up")}
-                    className="flex items-center w-full font-semibold text-green-600"
-                    href="/sign-up"
-                  >
-                    Get started
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </li>
-                <li className="my-3 h-px w-full bg-gray-300" />
-                <li>
-                  <Link
-                    onClick={() => closeOnCurrent("/sign-in")}
-                    className="flex items-center w-full font-semibold"
-                    href="/sign-in"
-                  >
-                    Sign in
-                  </Link>
-                </li>
-                <li className="my-3 h-px w-full bg-gray-300" />
-                <li>
-                  <Link
-                    onClick={() => closeOnCurrent("/pricing")}
-                    className="flex items-center w-full font-semibold"
-                    href="/pricing"
-                  >
-                    Pricing
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <Link
-                    onClick={() => closeOnCurrent("/dashboard")}
-                    className="flex items-center w-full font-semibold"
-                    href="/dashboard"
-                  >
-                    Dashboard
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    onClick={() => closeOnCurrent("/dashboard/settings")}
-                    className="flex items-center w-full font-semibold"
-                    href="/dashboard/settings"
-                  >
-                    Settings
-                  </Link>
-                </li>
-                <li>
-                  {isSubscribed ? (
-                    <Link
-                      onClick={() => closeOnCurrent("/dashboard/settings")}
-                      className="flex items-center w-full font-semibold"
-                      href="/dashboard/settings"
-                    >
-                      Manage Subscription
-                    </Link>
-                  ) : (
-                    <Link
-                      onClick={() => closeOnCurrent("/pricing")}
-                      className="flex items-center w-full font-semibold"
-                      href="/pricing"
-                    >
-                      Upgrade <Gem className="text-blue-600 h-4 w-4 ml-1.5" />
-                    </Link>
-                  )}
-                </li>
-                <li className="my-3 h-px w-full bg-gray-300" />
-                <li>
-                  <Link
-                    className="flex items-center w-full font-semibold"
-                    href="/sign-out"
-                  >
-                    Sign out
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
-      ) : null}
-    </div>
+      <DropdownMenuContent className="mt-2" align="end">
+        {navbarItems.map((item) => {
+          return !item.private ? (
+            <DropdownMenuItem key={item.name} className="cursor-pointer">
+              <NavbarItem name={item.name} href={item.href} />
+            </DropdownMenuItem>
+          ) : null;
+        })}
+        <DropdownMenuSeparator />
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
-export default MobileNav
+export default MobileNav;
