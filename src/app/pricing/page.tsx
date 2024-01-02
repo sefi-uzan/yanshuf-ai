@@ -1,5 +1,5 @@
-import MaxWidthWrapper from "@/components/providers/MaxWidthWrapper";
 import UpgradeButton from "@/components/pricing/UpgradeButton";
+import MaxWidthWrapper from "@/components/providers/MaxWidthWrapper";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Tooltip,
@@ -9,13 +9,16 @@ import {
 } from "@/components/ui/tooltip";
 import { PLANS } from "@/config/stripe";
 import { cn } from "@/lib/utils";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ArrowRight, Check, HelpCircle, Minus } from "lucide-react";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 
-const Page = () => {
-  const { getUser } = getKindeServerSession();
-  const user = getUser();
+const Page = async () => {
+  const session = await getServerSession();
+
+  if (!session) return new Response("Unauthorized", { status: 401 });
+
+  const { user } = session;
 
   const pricingItems = [
     {

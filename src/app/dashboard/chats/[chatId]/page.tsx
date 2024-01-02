@@ -1,7 +1,7 @@
 import ChatWrapper from "@/components/chat/ChatWrapper";
 import { db } from "@/db";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
 
 interface PageProps {
@@ -13,8 +13,11 @@ interface PageProps {
 const Page = async ({ params }: PageProps) => {
   const { chatId } = params;
 
-  const { getUser } = getKindeServerSession();
-  const user = getUser();
+  const session = await getServerSession();
+
+  if (!session) return new Response("Unauthorized", { status: 401 });
+
+  const { user } = session;
 
   if (!user || !user.id) redirect(`/auth-callback?origin=dashboard/${chatId}`);
 
@@ -26,8 +29,6 @@ const Page = async ({ params }: PageProps) => {
   });
 
   if (!chat) notFound();
-
-  const plan = await getUserSubscriptionPlan();
 
   return (
     <div className="flex-1 justify-between flex flex-col h-[calc(100vh-6.5rem)]">

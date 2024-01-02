@@ -1,5 +1,4 @@
 import ProfileForm from "@/components/dashboard/settings/profile/ProfileForm";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 const Page = () => {
   return (

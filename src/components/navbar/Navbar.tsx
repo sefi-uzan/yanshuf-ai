@@ -1,5 +1,5 @@
 import { getUserSubscriptionPlan } from "@/lib/stripe";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 import MaxWidthWrapper from "../providers/MaxWidthWrapper";
 import { buttonVariants } from "../ui/button";
@@ -10,8 +10,8 @@ import { navbarItems } from "./NavbarItems";
 import UserAccountNav from "./UserAccountNav";
 
 const Navbar = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = getUser();
+  const session = await getServerSession();
+
   const subscriptionPlan = await getUserSubscriptionPlan();
 
   return (
@@ -23,23 +23,21 @@ const Navbar = async () => {
           </Link>
           <div className="sm:hidden flex items-center justify-between gap-x-2">
             <ModeToggle />
-            {!user ? (
+            {!session?.user ? (
               <MobileNav />
             ) : (
               <UserAccountNav
                 name={
-                  !user.given_name || !user.family_name
-                    ? "Your Account"
-                    : `${user.given_name} ${user.family_name}`
+                  !session.user?.name ? "Your Account" : `${session.user?.name}`
                 }
-                email={user.email ?? ""}
-                imageUrl={user.picture ?? ""}
+                email={session.user?.email ?? ""}
+                imageUrl={session.user?.image ?? ""}
                 isSubscribed={subscriptionPlan?.isSubscribed}
               />
             )}
           </div>
           <div className="hidden items-center space-x-4 sm:flex">
-            {!user ? (
+            {!session?.user ? (
               <>
                 <ModeToggle />
                 {navbarItems.map((item) => {
@@ -67,12 +65,12 @@ const Navbar = async () => {
 
                 <UserAccountNav
                   name={
-                    !user.given_name || !user.family_name
+                    !session.user?.name
                       ? "Your Account"
-                      : `${user.given_name} ${user.family_name}`
+                      : `${session.user?.name}`
                   }
-                  email={user.email ?? ""}
-                  imageUrl={user.picture ?? ""}
+                  email={session.user?.email ?? ""}
+                  imageUrl={session.user?.image ?? ""}
                   isSubscribed={subscriptionPlan?.isSubscribed}
                 />
               </>

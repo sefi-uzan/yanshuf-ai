@@ -7,16 +7,17 @@ import { PLANS } from "@/config/stripe";
 import { db } from "@/db";
 import { getUserSubscriptionPlan, stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { TRPCError } from "@trpc/server";
+import { getServerSession } from "next-auth";
 
 export const authRouter = router({
   authCallback: publicProcedure.query(async () => {
-    const { getUser } = getKindeServerSession();
-    const user = getUser();
+    const session = await getServerSession();
 
-    if (!user.id || !user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    if (!session?.user.id || !session.user.email)
+      throw new TRPCError({ code: "UNAUTHORIZED" });
 
+    const { user } = session;
     // check if the user is in the database
     const dbUser = await db.user.findFirst({
       where: {

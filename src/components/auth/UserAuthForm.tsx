@@ -15,6 +15,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Separator } from "../ui/separator";
+import { signIn } from "next-auth/react";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -42,6 +44,19 @@ const UserAuthFormm = () => {
   }
   return (
     <Form {...form}>
+      <div className="flex justify-between space-x-8">
+        <Button
+          variant="outline"
+          className="rounded=lg w-full"
+          onClick={() => signIn()}
+        >
+          Google
+        </Button>
+        <Button variant="outline" className="rounded=lg w-full">
+          Github
+        </Button>
+      </div>
+      <Separator className="mt-4" />
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}

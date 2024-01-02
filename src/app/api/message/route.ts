@@ -1,20 +1,22 @@
-import { db } from '@/db'
-import { openai } from '@/lib/openai'
+import { db } from "@/db";
+import { openai } from "@/lib/openai";
 import { SendMessageValidator } from "@/lib/validators/SendMessageValidator";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { NextRequest } from "next/server";
 
-import { OpenAIStream, StreamingTextResponse } from "ai";
 import { Pinecone } from "@pinecone-database/pinecone";
+import { OpenAIStream, StreamingTextResponse } from "ai";
+import { getServerSession } from "next-auth";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
 
-  const { getUser } = getKindeServerSession();
-  const user = getUser();
+  const session = await getServerSession();
 
+  if (!session) return new Response("Unauthorized", { status: 401 });
+
+  const { user } = session;
   const { id: userId } = user;
 
   if (!userId) return new Response("Unauthorized", { status: 401 });

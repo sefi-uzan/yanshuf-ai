@@ -1,11 +1,14 @@
 import { db } from "@/db";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = getUser();
+  const session = await getServerSession();
+
+  if (!session) return new Response("Unauthorized", { status: 401 });
+
+  const { user } = session;
 
   if (!user || !user.id) redirect("/auth-callback?origin=dashboard");
 
@@ -16,8 +19,6 @@ const Page = async () => {
   });
 
   if (!dbUser) redirect("/auth-callback?origin=dashboard");
-
-  const subscriptionPlan = await getUserSubscriptionPlan();
 
   return <></>;
 };
