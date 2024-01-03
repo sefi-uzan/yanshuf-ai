@@ -1,6 +1,15 @@
+"use client";
+import { trpc } from "@/app/_trpc/client";
 import ProfileForm from "@/components/dashboard/settings/profile/ProfileForm";
+import { Loader2 } from "lucide-react";
+import { redirect } from "next/navigation";
 
 const Page = () => {
+  const { data, isLoading } = trpc.user.getUserInfo.useQuery();
+  while (isLoading) return <Loader2 className="h-4 w-4 animate-spin" />;
+  console.log(data);
+  if (!data?.user) redirect("/sign-in");
+
   return (
     <div className="w-full">
       <div className="space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
@@ -17,7 +26,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <ProfileForm />
+      <ProfileForm user={data.user} />
     </div>
   );
 };

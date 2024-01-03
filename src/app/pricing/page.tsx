@@ -7,14 +7,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { getAuthSession } from "@/config/auth-options";
 import { PLANS } from "@/config/stripe";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Check, HelpCircle, Minus } from "lucide-react";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 const Page = async () => {
-  const session = await getServerSession();
+  const session = await getAuthSession();
 
   const pricingItems = [
     {

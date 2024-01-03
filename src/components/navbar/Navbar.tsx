@@ -8,9 +8,10 @@ import MobileNav from "./MobileNav";
 import NavbarItem from "./NavbarItem.";
 import { navbarItems } from "./NavbarItems";
 import UserAccountNav from "./UserAccountNav";
+import { getAuthSession } from "@/config/auth-options";
 
 const Navbar = async () => {
-  const session = await getServerSession();
+  const session = await getAuthSession();
 
   const subscriptionPlan = await getUserSubscriptionPlan();
 

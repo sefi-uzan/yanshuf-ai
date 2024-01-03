@@ -1,3 +1,4 @@
+import { getAuthSession } from "@/config/auth-options";
 import { PLANS } from "@/config/stripe";
 import { db } from "@/db";
 import { getServerSession } from "next-auth";
@@ -9,7 +10,7 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
 });
 
 export async function getUserSubscriptionPlan() {
-  const session = await getServerSession();
+  const session = await getAuthSession();
 
   if (!session) {
     return {

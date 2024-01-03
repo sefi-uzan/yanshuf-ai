@@ -3,6 +3,7 @@ import {
   publicProcedure,
   router,
 } from "@/app/api/trpc/trpc/trpc";
+import { getAuthSession } from "@/config/auth-options";
 import { PLANS } from "@/config/stripe";
 import { db } from "@/db";
 import { getUserSubscriptionPlan, stripe } from "@/lib/stripe";
@@ -11,31 +12,6 @@ import { TRPCError } from "@trpc/server";
 import { getServerSession } from "next-auth";
 
 export const authRouter = router({
-  authCallback: publicProcedure.query(async () => {
-    const session = await getServerSession();
-
-    if (!session?.user.id || !session.user.email)
-      throw new TRPCError({ code: "UNAUTHORIZED" });
-
-    const { user } = session;
-    // check if the user is in the database
-    const dbUser = await db.user.findFirst({
-      where: {
-        id: user.id,
-      },
-    });
-
-    if (!dbUser) {
-      // create user in db
-      await db.user.create({
-        data: {
-          id: user.id,
-          email: user.email,
-        },
-      });
-    }
-    return { success: true };
-  }),
   createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
     const { userId } = ctx;
 

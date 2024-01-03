@@ -18,6 +18,15 @@ type Issues = {
   summary: string;
 };
 
+type User = {
+  user: {
+    username: string;
+    name: string;
+    email: string;
+    image: string;
+  };
+};
+
 type Messages = RouterOutput["messages"]["getMessages"]["messages"];
 
 type OmitText = Omit<Messages[number], "text">;

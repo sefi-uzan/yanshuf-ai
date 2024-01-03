@@ -1,9 +1,10 @@
+import { getAuthSession } from "@/config/auth-options";
 import { db } from "@/db";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const session = await getServerSession();
+  const session = await getAuthSession();
 
   if (!session) return new Response("Unauthorized", { status: 401 });
 

@@ -8,11 +8,12 @@ import { NextRequest } from "next/server";
 import { Pinecone } from "@pinecone-database/pinecone";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { getServerSession } from "next-auth";
+import { getAuthSession } from "@/config/auth-options";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
 
-  const session = await getServerSession();
+  const session = await getAuthSession();
 
   if (!session) return new Response("Unauthorized", { status: 401 });
 

@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { trpc } from "@/app/_trpc/client";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,25 +16,56 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
+import { User } from "@/types/types";
+import { redirect } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
+  name: z.string().min(2, {
+    message: "Name must be at least 2 characters.",
+  }),
+  email: z.string(),
+  image: z.string(),
 });
 
-const ProfileForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
+const ProfileForm = ({ user }: User) => {
+  const utils = trpc.useUtils();
+  const { toast } = useToast();
+
+  if (!user) redirect("/auth/sign-in");
+
+  const { mutate } = trpc.user.updateUserInfo.useMutation({
+    onSuccess: () => {
+      utils.user.getUserInfo.invalidate();
+    },
+    onMutate() {
+      return <Loader2 className="h-4 w-4 animate-spin" />;
+    },
+    onSettled() {
+      toast({
+        title: "Success",
+        description: "Your details have been updated successfully",
+        variant: "default",
+      });
     },
   });
 
-  // 2. Define a submit handler.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: user.username,
+      name: user.name,
+      email: user.email,
+      image: user.image,
+    },
+  });
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    mutate(values);
     console.log(values);
   }
   return (
@@ -50,6 +82,50 @@ const ProfileForm = () => {
               </FormControl>
               <FormDescription>
                 This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>This is your real name.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>This is your email.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public avatar image.
               </FormDescription>
               <FormMessage />
             </FormItem>

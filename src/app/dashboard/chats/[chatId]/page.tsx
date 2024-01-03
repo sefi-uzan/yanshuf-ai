@@ -13,7 +13,7 @@ interface PageProps {
 const Page = async ({ params }: PageProps) => {
   const { chatId } = params;
 
-  const session = await getServerSession();
+  const session = await getAuthSession();
 
   if (!session) return new Response("Unauthorized", { status: 401 });
 

@@ -23,9 +23,7 @@ const SettingsMobileNav = () => {
 
       <DropdownMenuContent className="mt-2" align="end">
         {settingsNavItems.map((item) => (
-          <li key={item.name}>
-            <DashboardNavItem item={item} />
-          </li>
+          <DashboardNavItem item={item} key={item.name} />
         ))}
         <DropdownMenuSeparator />
       </DropdownMenuContent>
