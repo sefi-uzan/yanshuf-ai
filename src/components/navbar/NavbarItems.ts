@@ -18,7 +18,7 @@ export const navbarItems: NavbarItem[] = [
   },
   {
     name: "Get started",
-    href: "/auth/sign-up",
+    href: "/auth/sign-in",
     private: false,
   },
   {
@@ -40,10 +40,5 @@ export const navbarItems: NavbarItem[] = [
       href: "/dashboard/settings/subscription",
       private: true,
     },
-  },
-  {
-    name: "Sign out",
-    href: "/auth/sign-out",
-    private: true,
   },
 ];

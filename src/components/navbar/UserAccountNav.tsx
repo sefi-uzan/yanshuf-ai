@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,8 @@ import {
 import NavbarItem from "./NavbarItem.";
 import { navbarItems } from "./NavbarItems";
 import { useSetOpen } from "../hooks/useSetOpen";
+import { signOut } from "next-auth/react";
+import { cn } from "@/lib/utils";
 
 interface UserAccountNavProps {
   email: string | undefined;
@@ -62,7 +64,11 @@ const UserAccountNav = ({
         <div className="flex items-center justify-start gap-2 p-2 ">
           <div className="flex flex-col space-y-0.5 leading-none">
             {name && <p className="font-medium text-sm">{name}</p>}
-            {email && <p className="w-[200px] truncate text-xs">{email}</p>}
+            {email && (
+              <p className="w-[180px] max-w-[200px] truncate text-xs">
+                {email}
+              </p>
+            )}
           </div>
         </div>
         <DropdownMenuSeparator />
@@ -81,6 +87,17 @@ const UserAccountNav = ({
           ) : null;
         })}
         <DropdownMenuSeparator />
+        <DropdownMenuItem className="cursor-pointer">
+          <Button
+            variant="ghost"
+            className="flex flex-grow justify-start px-0"
+            onClick={() => {
+              signOut({ callbackUrl: "/" });
+            }}
+          >
+            Sign out
+          </Button>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

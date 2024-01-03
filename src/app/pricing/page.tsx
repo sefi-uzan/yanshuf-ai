@@ -16,10 +16,6 @@ import Link from "next/link";
 const Page = async () => {
   const session = await getServerSession();
 
-  if (!session) return new Response("Unauthorized", { status: 401 });
-
-  const { user } = session;
-
   const pricingItems = [
     {
       plan: "Free",
@@ -186,16 +182,16 @@ const Page = async () => {
                   <div className="p-5">
                     {plan === "Free" ? (
                       <Link
-                        href={user ? "/dashboard" : "/sign-in"}
+                        href={session ? "/dashboard" : "/sign-in"}
                         className={buttonVariants({
                           className: "w-full",
                           variant: "secondary",
                         })}
                       >
-                        {user ? "Upgrade now" : "Sign up"}
+                        {session ? "Upgrade now" : "Sign up"}
                         <ArrowRight className="h-5 w-5 ml-1.5" />
                       </Link>
-                    ) : user ? (
+                    ) : session ? (
                       <UpgradeButton />
                     ) : (
                       <Link
@@ -204,7 +200,7 @@ const Page = async () => {
                           className: "w-full",
                         })}
                       >
-                        {user ? "Upgrade now" : "Sign up"}
+                        {session ? "Upgrade now" : "Sign up"}
                         <ArrowRight className="h-5 w-5 ml-1.5" />
                       </Link>
                     )}

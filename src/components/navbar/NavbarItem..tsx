@@ -13,7 +13,6 @@ type DashboardNavItem = {
 const NavbarItem = ({ name, href }: DashboardNavItem) => {
   return (
     <Link
-      onClick={() => {}}
       href={`${href}`}
       key={href}
       className={cn(
@@ -21,7 +20,7 @@ const NavbarItem = ({ name, href }: DashboardNavItem) => {
           variant: "ghost",
           size: "sm",
         }),
-        "flex flex-grow "
+        "flex flex-grow justify-start px-0"
       )}
     >
       {name}

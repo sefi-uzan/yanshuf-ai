@@ -9,9 +9,6 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  pages: {
-    signIn: "/sign-in",
-  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -61,9 +58,6 @@ export const authOptions: NextAuthOptions = {
         picture: dbUser.image,
         username: dbUser.username,
       };
-    },
-    redirect() {
-      return "/";
     },
   },
 };

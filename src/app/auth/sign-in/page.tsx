@@ -7,8 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Page = () => {
+
   return (
     <MaxWidthWrapper className="flex max-h-screen justify-center items-center">
       <Card className="sm: mx-2 block md:flex md:flex-col max-w-sm self-center">

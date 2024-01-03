@@ -1,5 +1,4 @@
 import { db } from "@/db";
-import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -10,7 +9,7 @@ const Page = async () => {
 
   const { user } = session;
 
-  if (!user || !user.id) redirect("/auth-callback?origin=dashboard");
+  if (!user) redirect("/auth-callback?origin=nouser");
 
   const dbUser = await db.user.findFirst({
     where: {
@@ -18,7 +17,7 @@ const Page = async () => {
     },
   });
 
-  if (!dbUser) redirect("/auth-callback?origin=dashboard");
+  if (!dbUser) redirect("/auth-callback?origin=nodbuser");
 
   return <></>;
 };

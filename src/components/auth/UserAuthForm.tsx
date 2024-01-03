@@ -48,7 +48,7 @@ const UserAuthFormm = () => {
         <Button
           variant="outline"
           className="rounded=lg w-full"
-          onClick={() => signIn()}
+          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
         >
           Google
         </Button>
