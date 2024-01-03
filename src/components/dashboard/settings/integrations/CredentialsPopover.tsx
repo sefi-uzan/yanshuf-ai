@@ -1,7 +1,9 @@
-import { Input } from "../../ui/input";
-import { Label } from "../../ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
-import { Button } from "../../ui/button";
+"use client";
+
+import { Input } from "../../../ui/input";
+import { Label } from "../../../ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "../../../ui/popover";
+import { Button } from "../../../ui/button";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { trpc } from "@/app/_trpc/client";

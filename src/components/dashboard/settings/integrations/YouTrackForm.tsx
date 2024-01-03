@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../ui/card";
+} from "../../../ui/card";
 
 import { trpc } from "@/app/_trpc/client";
 import CredentialsPopover from "./CredentialsPopover";

@@ -1,19 +1,18 @@
 "use client";
 
-import { getUserSubscriptionPlan } from "@/lib/stripe";
-import { useToast } from "../../ui/use-toast";
 import { trpc } from "@/app/_trpc/client";
-import MaxWidthWrapper from "../../providers/MaxWidthWrapper";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
+import { format } from "date-fns";
+import { Loader2 } from "lucide-react";
+import { Button } from "../../../ui/button";
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../ui/card";
-import { Button } from "../../ui/button";
-import { Loader2 } from "lucide-react";
-import { format } from "date-fns";
+} from "../../../ui/card";
+import { useToast } from "../../../ui/use-toast";
 
 interface BillingFormProps {
   subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
