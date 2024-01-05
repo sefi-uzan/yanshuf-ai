@@ -20,7 +20,7 @@ const Page = async ({ params }: PageProps) => {
 
   const { user } = session;
 
-  if (!user || !user.id) redirect(`/auth-callback?origin=dashboard/${chatId}`);
+  if (!user?.id) redirect(`/auth-callback?origin=dashboard/${chatId}`);
 
   const chat = await db.chat.findFirst({
     where: {
