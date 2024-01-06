@@ -1,17 +1,17 @@
-import UpgradeButton from "@/components/pricing/UpgradeButton";
-import MaxWidthWrapper from "@/components/providers/MaxWidthWrapper";
-import { buttonVariants } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { getAuthSession } from "@/config/auth-options";
 import { PLANS } from "@/config/stripe";
 import { cn } from "@/lib/utils";
 import { ArrowRight, Check, HelpCircle, Minus } from "lucide-react";
 import Link from "next/link";
+import MaxWidthWrapper from "../components/providers/MaxWidthWrapper";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../components/ui/tooltip";
+import { buttonVariants } from "../components/ui/button";
+import UpgradeButton from "./components/UpgradeButton";
 
 const Page = async () => {
   const session = await getAuthSession();

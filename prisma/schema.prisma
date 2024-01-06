@@ -49,8 +49,10 @@ model User {
   emailVerified     DateTime?
 
   username String @unique
+
   youtrackToken String @unique @default("")
   youtrackBaseUrl String @default("")
+  youtrackActiveProject String?
 
   image       String
   accounts    Account[]

@@ -1,14 +1,14 @@
 "use client";
 
 import { trpc } from "@/app/_trpc/client";
-import { getUserSubscriptionPlan } from "@/lib/stripe";
+import { Button } from "@/app/components/ui/button";
+import EmptyState from "@/app/components/ui/empty-state";
 import { format } from "date-fns";
-import { FolderSync, Ghost, Loader2, Trash } from "lucide-react";
+import { FolderSync, Loader2, Trash } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import { Button } from "@/components/ui/button";
-import CreateChatButton from "@/components/dashboard/chats/CreateChatButton";
+import CreateChatButton from "./components/CreateChatButton";
 
 const Page = () => {
   const [currentlyDeletingChat, setCurrentlyDeletingChat] = useState<
@@ -120,11 +120,7 @@ const Page = () => {
       ) : isLoading ? (
         <Skeleton height={100} className="my-2" count={3} baseColor="#070708" />
       ) : (
-        <div className="mt-16 flex flex-col items-center gap-2">
-          <Ghost className="h-8 w-8" />
-          <h3 className="font-semibold text-xl">Pretty empty around here</h3>
-          <p>Let&apos;s create your first chat.</p>
-        </div>
+        <EmptyState />
       )}
     </main>
   );

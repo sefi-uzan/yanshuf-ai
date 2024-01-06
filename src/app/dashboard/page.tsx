@@ -1,6 +1,5 @@
 import { getAuthSession } from "@/config/auth-options";
 import { db } from "@/db";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 const Page = async () => {

@@ -1,4 +1,4 @@
-import YouTrackForm from "@/components/dashboard/settings/integrations/YouTrackForm";
+import YouTrackForm from "./components/YouTrackForm";
 
 const Page = () => {
   return (

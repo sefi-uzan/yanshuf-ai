@@ -1,9 +1,7 @@
-import ChatWrapper from "@/components/chat/ChatWrapper";
 import { getAuthSession } from "@/config/auth-options";
 import { db } from "@/db";
-import { getUserSubscriptionPlan } from "@/lib/stripe";
-import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
+import ChatWrapper from "../components/chat/ChatWrapper";
 
 interface PageProps {
   params: {

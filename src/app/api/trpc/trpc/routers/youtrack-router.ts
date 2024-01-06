@@ -37,11 +37,25 @@ export const youtrackRouter = router({
     const response = await youtrack.getProjcets();
     return { projects: response.data };
   }),
+  getUserActiveProject: privateProcedure.query(async ({ ctx }) => {
+    const { userId } = ctx;
+
+    const dbUser = await db.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!dbUser || dbUser.youtrackToken === "")
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    return { activeProject: dbUser.youtrackActiveProject };
+  }),
 
   getUserIssues: privateProcedure
     .input(
       z.object({
-        projectId: z.string(),
+        projectId: z.string().optional(),
       })
     )
     .query(async ({ ctx, input }) => {
@@ -56,12 +70,42 @@ export const youtrackRouter = router({
       if (!dbUser || dbUser.youtrackToken === "")
         throw new TRPCError({ code: "UNAUTHORIZED" });
 
+      if (!input.projectId)
+        throw new TRPCError({ code: "UNPROCESSABLE_CONTENT" });
+
       const youtrack = new Youtrack(
         dbUser.youtrackBaseUrl,
         dbUser.youtrackToken
       );
       const response = await youtrack.getProjcetIssues(input.projectId);
       return { issues: response.data };
+    }),
+  setUserActiveProject: privateProcedure
+    .input(
+      z.object({
+        project: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId: id } = ctx;
+      const { project } = input;
+
+      if (!project) throw new TRPCError({ code: "UNPROCESSABLE_CONTENT" });
+
+      if (!id) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      const updateUser = await db.user.update({
+        where: {
+          id,
+        },
+        data: {
+          youtrackActiveProject: project,
+        },
+      });
+
+      if (!updateUser) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      return { activeProject: updateUser.youtrackActiveProject };
     }),
 
   addUserYoutrackCredentials: privateProcedure

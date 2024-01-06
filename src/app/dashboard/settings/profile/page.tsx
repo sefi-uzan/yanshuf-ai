@@ -1,8 +1,9 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
-import ProfileForm from "@/components/dashboard/settings/profile/ProfileForm";
+
 import { Loader2 } from "lucide-react";
 import { redirect } from "next/navigation";
+import ProfileForm from "./components/ProfileForm";
 
 const Page = () => {
   const { data, isLoading } = trpc.user.getUserInfo.useQuery();
