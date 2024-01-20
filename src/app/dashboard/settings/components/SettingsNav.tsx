@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import DashboardNavItem from "../../navigation/DashboardNavItem";
+import DashboardNavItem from "../../components/navigation/DashboardNavItem";
 
 export const settingsNavItems = [
   {

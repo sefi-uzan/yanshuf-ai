@@ -10,7 +10,7 @@ import { ReactNode } from "react";
 const dashboardNavItems = [
   {
     name: "Dashboard",
-    href: "/dashboard",
+    href: "/dashboard/",
   },
   {
     name: "Chats",
@@ -22,7 +22,7 @@ const dashboardNavItems = [
   },
   {
     name: "Settings",
-    href: "/dashboard/settings",
+    href: "/dashboard/settings/profile",
   },
 ];
 
@@ -33,6 +33,8 @@ interface Props {
 const DashboardNav = ({ children }: Props) => {
   const pathname = usePathname();
 
+  console.log(pathname.split("/"));
+
   return (
     <div className="relative">
       <ScrollArea className="max-w-[600px] lg:max-w-none">
@@ -42,7 +44,7 @@ const DashboardNav = ({ children }: Props) => {
               href={`${item.href}`}
               key={item.href}
               className={
-                pathname === item.href
+                pathname.split("/")[2] === item.href.split("/")[2]
                   ? buttonVariants({ variant: "secondary" })
                   : buttonVariants({ variant: "ghost" })
               }

@@ -37,7 +37,7 @@ export const navbarItems: NavbarItem[] = [
     private: true,
     subscribed: {
       name: "Subscription",
-      href: "/dashboard/settings/subscription",
+      href: "/dashboard/settings/account",
       private: true,
     },
   },

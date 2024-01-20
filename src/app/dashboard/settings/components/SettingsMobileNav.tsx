@@ -2,14 +2,14 @@
 
 import { Menu } from "lucide-react";
 
-import { useSetOpen } from "@/components/hooks/useSetOpen";
+import { useSetOpen } from "@/app/components/hooks/useSetOpen";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../../ui/dropdown-menu";
-import DashboardNavItem from "../../navigation/DashboardNavItem";
+} from "@/app/components/ui/dropdown-menu";
+import DashboardNavItem from "../../components/navigation/DashboardNavItem";
 import { settingsNavItems } from "./SettingsNav";
 
 const SettingsMobileNav = () => {

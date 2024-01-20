@@ -3,23 +3,23 @@
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command";
+} from "@/app/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/app/components/ui/popover";
 import { useState } from "react";
 import { Projects } from "@/types/types";
 import { trpc } from "@/app/_trpc/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/app/components/ui/use-toast";
 
 type ProjectSelectionProps = {
   projects?: Projects[];

@@ -6,12 +6,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../../ui/card";
+} from "@/app/components/ui/card";
 
 import { trpc } from "@/app/_trpc/client";
 import CredentialsPopover from "./CredentialsPopover";
 import ProjectSelection from "./ProjectSelection";
-import { Button } from "@/components/ui/button";
 
 const YouTrackForm = () => {
   const credentials = trpc.youtrack.getUserYoutrackCredentials.useQuery();
@@ -29,7 +28,7 @@ const YouTrackForm = () => {
           </CardDescription>
         </CardHeader>
 
-        <CardFooter className="flex flex-col space-y-4 items-center justify-center">
+        <CardFooter className="flex flex-col md:flex-row md:justify-between space-y-4 items-center justify-center">
           <CredentialsPopover
             credentials={credentials.data!}
             isLoading={credentials.isLoading}
