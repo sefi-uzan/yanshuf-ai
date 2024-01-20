@@ -1,58 +1,44 @@
 name: CI
+
 on: [push, pull_request]
 
 jobs:
-  build_and_test:
+
+  build:
     runs-on: ubuntu-latest
-    env:
-      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }} 
-
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-      UPLOADTHING_SECRET: ${{ secrets.UPLOADTHING_SECRET }}
-      UPLOADTHING_APP_ID: ${{ secrets.UPLOADTHING_APP_ID }}
-
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
-      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}  
-      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
-
-      PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
-      PINECONE_ENVIRONMENT: ${{ secrets.PINECONE_ENVIRONMENT }}
-      PINECONE_INDEX: ${{ secrets.PINECONE_INDEX }}
-
-      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-
-    steps:
     
-    - name: Checkout Code
-      uses: actions/checkout@v3
-
+    
+    steps:
+    - uses: actions/checkout@v3
     - name: Install Dependencies
       run: npm install
-
+    
     - name: Lint
       run: npm run lint
-
-    - name: Typecheck  
+    
+    - name: Typecheck
       run: npm run typecheck
-
+    
     - name: Build
       run: npm run build
 
-    - name: Install Playwright Browsers
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Dependencies
+      run: npm install
+    - name: Build
+      run: npm run build
+    - name: Install Playwright Browsers  
       run: npx playwright install --with-deps
-
     - name: Run Playwright Tests
       run: npx playwright test
-
     - name: Run Jest Tests
       run: npm run test
-
-    - name: Upload Artifacts 
-      uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       if: always()
       with:
         name: playwright-report
