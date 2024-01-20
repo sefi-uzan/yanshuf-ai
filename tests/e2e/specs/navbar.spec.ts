@@ -12,12 +12,17 @@ test.describe("Navbar tests", () => {
     await expect(homePage.navbar.themeToggle).toBeVisible();
   });
 
-  test("logged out navbar items are displayed @no-mobile", async ({
-    homePage,
-  }) => {
+  test("logged out displays the theme toggle @mobile", async ({ homePage }) => {
+    await expect(homePage.navbar.mobileThemeToggle).toBeVisible();
+  });
+
+  test("logged out navbar items are displayed", async ({ homePage }) => {
     await expect(homePage.navbar.pricingLink).toContainText("Pricing");
     await expect(homePage.navbar.signInLink).toContainText("Sign in");
     await expect(homePage.navbar.getStartedLink).toContainText("Get started");
   });
 
+  test("mobile menu is displayed on @mobile", async ({ homePage }) => {
+    await expect(homePage.navbar.mobileMenu).toBeVisible();
+  });
 });
