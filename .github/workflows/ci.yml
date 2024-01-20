@@ -1,10 +1,8 @@
 name: CI
-
 on: [push, pull_request]
 
 jobs:
-
-  install:
+  build_and_test:
     runs-on: ubuntu-latest
     env:
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
@@ -26,52 +24,35 @@ jobs:
 
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-    
+
     steps:
-    - uses: actions/checkout@v3
+    
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
     - name: Install Dependencies
       run: npm install
 
-  lint:
-    needs: install
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
     - name: Lint
-      run: npx next lint
+      run: npm run lint
 
-  typecheck:
-    needs: lint
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    - name: Typecheck
+    - name: Typecheck  
       run: npm run typecheck
 
-  build:
-    needs: typecheck
-    runs-on: ubuntu-latest
-    
-    steps:  
-    - uses: actions/checkout@v3
     - name: Build
       run: npm run build
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    - name: Install Playwright Browsers  
+    - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+
     - name: Run Playwright Tests
       run: npx playwright test
+
     - name: Run Jest Tests
       run: npm run test
-    - uses: actions/upload-artifact@v3
+
+    - name: Upload Artifacts 
+      uses: actions/upload-artifact@v3
       if: always()
       with:
         name: playwright-report
