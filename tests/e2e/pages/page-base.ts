@@ -13,12 +13,4 @@ export class PageBase {
     console.log("Closing page...");
     await this.page.close();
   }
-
-  public async gotoHomePage(): Promise<HomePage> {
-    const homepage = new HomePage(this.page);
-
-    await homepage.goto();
-
-    return homepage;
-  }
 }

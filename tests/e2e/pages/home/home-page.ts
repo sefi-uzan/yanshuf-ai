@@ -9,6 +9,5 @@ export class HomePage extends PageBase {
   public async goto(): Promise<void> {
     await this.page.goto("/");
 
-    await this.page.waitForLoadState();
   }
 }
