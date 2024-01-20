@@ -39,7 +39,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Lint
-      run: npm run lint
+      run: npx next lint
 
   typecheck:
     needs: lint
