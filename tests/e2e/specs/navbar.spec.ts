@@ -22,7 +22,9 @@ test.describe("Navbar tests", () => {
     await expect(homePage.navbar.getStartedLink).toContainText("Get started");
   });
 
-  test("mobile menu is displayed on @mobile", async ({ homePage }) => {
+  test.only("logged out mobile menu is displayed on @mobile", async ({
+    homePage,
+  }) => {
     await expect(homePage.navbar.mobileMenu).toBeVisible();
   });
 });

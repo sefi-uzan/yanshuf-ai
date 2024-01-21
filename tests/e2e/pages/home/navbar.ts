@@ -29,6 +29,6 @@ export class Navbar {
     this.pricingLink = this.navbarItems.locator('a:has-text("Pricing")');
     this.signInLink = this.navbarItems.locator('a:has-text("Sign in")');
     this.getStartedLink = this.navbarItems.locator('a:has-text("Get started")');
-    this.mobileMenu = this.mobileNavbarItems.locator("> svg");
+    this.mobileMenu = this.mobileNavbarItems.locator("> button").nth(1);
   }
 }
