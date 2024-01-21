@@ -1,3 +1,2 @@
 # Yanshuf.ai
 
-testci
