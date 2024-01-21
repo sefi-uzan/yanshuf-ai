@@ -35,31 +35,31 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      grepInvert: /@mobile/,
+      grepInvert: /#mobile/,
       use: { ...devices["Desktop Chrome"] },
     },
 
     {
       name: "firefox",
-      grepInvert: /@mobile/,
+      grepInvert: /#mobile/,
       use: { ...devices["Desktop Firefox"] },
     },
 
     {
       name: "webkit",
-      grepInvert: /@mobile/,
+      grepInvert: /#mobile/,
       use: { ...devices["Desktop Safari"] },
     },
 
     /* Test against mobile viewports. */
     {
       name: "Mobile Chrome",
-      grepInvert: /@no-mobile/,
+      grepInvert: /#no-mobile/,
       use: { ...devices["Pixel 5"] },
     },
     {
       name: "Mobile Safari",
-      grepInvert: /@no-mobile/,
+      grepInvert: /#no-mobile/,
       use: { ...devices["iPhone 12"] },
     },
 

@@ -12,6 +12,10 @@ export class Navbar {
   public readonly mobileNavbarItems: Locator;
   public readonly mobileMenu: Locator;
   public readonly mobileThemeToggle: Locator;
+  public readonly mobileMenuItems: Locator;
+  public readonly mobileMenuPricing: Locator;
+  public readonly mobileMenuSignIn: Locator;
+  public readonly mobileMenuGetStarted: Locator;
 
   constructor(page: Page) {
     this.navbarLocator = page.locator("nav > div > div");
@@ -30,5 +34,11 @@ export class Navbar {
     this.signInLink = this.navbarItems.locator('a:has-text("Sign in")');
     this.getStartedLink = this.navbarItems.locator('a:has-text("Get started")');
     this.mobileMenu = this.mobileNavbarItems.locator("> button").nth(1);
+    this.mobileMenuItems = page.getByRole("menu");
+    this.mobileMenuPricing = this.mobileMenuItems.getByRole("menuitem").nth(0);
+    this.mobileMenuSignIn = this.mobileMenuItems.getByRole("menuitem").nth(1);
+    this.mobileMenuGetStarted = this.mobileMenuItems
+      .getByRole("menuitem")
+      .nth(2);
   }
 }
