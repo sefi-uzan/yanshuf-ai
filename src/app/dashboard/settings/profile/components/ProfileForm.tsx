@@ -67,7 +67,6 @@ const ProfileForm = ({ user }: User) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     mutate(values);
-    console.log(values);
   }
   return (
     <Form {...form}>

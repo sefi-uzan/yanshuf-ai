@@ -8,7 +8,7 @@ import ProfileForm from "./components/ProfileForm";
 const Page = () => {
   const { data, isLoading } = trpc.user.getUserInfo.useQuery();
   while (isLoading) return <Loader2 className="h-4 w-4 animate-spin" />;
-  console.log(data);
+
   if (!data?.user) redirect("/sign-in");
 
   return (
