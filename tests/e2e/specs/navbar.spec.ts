@@ -86,7 +86,7 @@ test.describe("Navbar tests", () => {
     test("logged in clicking on the user menu will show navbar items #mobile", async ({
       homePage,
     }) => {
-      await homePage.navbar.mobileMenu.click();
+      await homePage.navbar.userMenu.click();
       await expect(homePage.navbar.userMenuItems.name).toHaveText("Yanshuf");
       await expect(homePage.navbar.userMenuItems.email).toHaveText(
         "sefiuzan812@gmail.com"
