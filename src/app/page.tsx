@@ -49,6 +49,7 @@ export default function Home() {
                   <Image
                     src="/dashboard-preview.jpg"
                     alt="product preview"
+                    priority={true}
                     width={1364}
                     height={866}
                     quality={100}

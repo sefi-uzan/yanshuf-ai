@@ -10,11 +10,19 @@ type SiteFixture = {
 };
 
 export const test = base.extend<SiteFixture>({
-  website: async ({ page }, use) => {
+  website: async ({ page }, use, testInfo) => {
     const website = new Website(page);
+
+    console.log(`Running test: ${testInfo.title}`);
+
+    if (!testInfo.title.includes("logged out")) {
+      console.log("Setting user cookie...");
+      await website.seteUserCookie();
+    }
 
     await use(website);
 
+    console.log(`Test finished with a status of ${testInfo.status}`);
     await website.close();
   },
   homePage: async ({ website }, use) => {

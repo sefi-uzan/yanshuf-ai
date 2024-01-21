@@ -65,6 +65,8 @@ jobs:
 
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+
+      USER_COOKIE: ${{ secrets.USER_COOKIE }}
     
     steps:
     - uses: actions/checkout@v3
