@@ -31,7 +31,7 @@ const UserAccountNav = ({
   const { open, setOpen } = useSetOpen();
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
+    <DropdownMenu open={open} onOpenChange={(open) => setOpen(open)}>
       <DropdownMenuTrigger asChild className="overflow-visible">
         <Button className="rounded-full h-8 w-8 aspect-square">
           <Avatar className="relative w-8 h-8">
@@ -73,7 +73,11 @@ const UserAccountNav = ({
         <DropdownMenuSeparator />
         {navbarItems.map((item) => {
           return item.private ? (
-            <DropdownMenuItem key={item.name} className="cursor-pointer">
+            <DropdownMenuItem
+              key={item.name}
+              className="cursor-pointer"
+              onClick={(open) => setOpen(!open)}
+            >
               {isSubscribed && item.subscribed ? (
                 <NavbarItem
                   name={item.subscribed.name}

@@ -94,10 +94,10 @@ const ProjectSelection = (projects: ProjectSelectionProps) => {
       </Popover>
       <Button
         onClick={() => mutate({ project: value.toLocaleUpperCase() })}
-        variant="outline"
+        variant="secondary"
         className=""
       >
-        Select active project
+        Set as active project
       </Button>
     </div>
   );

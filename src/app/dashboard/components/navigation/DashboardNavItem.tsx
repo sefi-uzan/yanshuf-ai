@@ -5,28 +5,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 type DashboardNavItem = {
-  item: {
-    href: string;
-    name: string;
-  };
+  href: string;
+  name: string;
+  className: string;
 };
 
-const DashboardNavItem = ({ item }: DashboardNavItem) => {
+const DashboardNavItem = ({ href, name, className }: DashboardNavItem) => {
   const pathname = usePathname();
   const { setOpen } = useSetOpen();
 
   return (
     <Link
       onClick={() => setOpen(false)}
-      href={`${item.href}`}
-      key={item.href}
-      className={
-        pathname === item.href
-          ? "flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-9 px-4 py-2 bg-muted hover:bg-muted justify-start"
-          : "flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-9 px-4 py-2 hover:bg-transparent hover:underline justify-start"
-      }
+      href={`${href}`}
+      key={href}
+      className={className}
     >
-      {item.name}
+      {name}
     </Link>
   );
 };

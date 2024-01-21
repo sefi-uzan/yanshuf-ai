@@ -6,6 +6,7 @@ import { ScrollArea, ScrollBar } from "@/app/components/ui/scroll-area";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
+import DashboardNavItem from "./DashboardNavItem";
 
 const dashboardNavItems = [
   {
@@ -33,24 +34,21 @@ interface Props {
 const DashboardNav = ({ children }: Props) => {
   const pathname = usePathname();
 
-  console.log(pathname.split("/"));
-
   return (
     <div className="relative">
       <ScrollArea className="max-w-[600px] lg:max-w-none">
         <div className="flex items-center">
           {dashboardNavItems.map((item) => (
-            <Link
-              href={`${item.href}`}
+            <DashboardNavItem
+              name={item.name}
+              href={item.href}
               key={item.href}
               className={
                 pathname.split("/")[2] === item.href.split("/")[2]
                   ? buttonVariants({ variant: "secondary" })
                   : buttonVariants({ variant: "ghost" })
               }
-            >
-              {item.name}
-            </Link>
+            />
           ))}
         </div>
         <ScrollBar orientation="horizontal" className="invisible" />

@@ -124,7 +124,7 @@ const CredentialsPopover = ({
               }}
             />
           </div>
-          <Button type="submit" variant="secondary" className="col-span-2">
+          <Button type="submit" variant="secondary" className="w-full">
             {isUserYoutrackDetailsLoading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (

@@ -11,25 +11,30 @@ import {
 } from "../ui/dropdown-menu";
 import NavbarItem from "./NavbarItem.";
 import { navbarItems } from "./NavbarItems";
+import { Button } from "../ui/button";
 
 const MobileNav = () => {
   const { open, setOpen } = useSetOpen();
 
   return (
-    <DropdownMenu open={open} onOpenChange={() => setOpen(open)}>
-      <DropdownMenuTrigger asChild className="overflow-visible">
-        <Menu onClick={() => {}} className="relative z-50 h-5 w-5" />
+    <DropdownMenu open={open} onOpenChange={(open) => setOpen(open)}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <Menu />
+        </Button>
       </DropdownMenuTrigger>
-
-      <DropdownMenuContent className="mt-2" align="end">
+      <DropdownMenuContent>
         {navbarItems.map((item) => {
           return !item.private ? (
-            <DropdownMenuItem key={item.name} className="cursor-pointer">
+            <DropdownMenuItem
+              key={item.name}
+              className="cursor-pointer"
+              onClick={(open) => setOpen(!open)}
+            >
               <NavbarItem name={item.name} href={item.href} />
             </DropdownMenuItem>
           ) : null;
         })}
-        <DropdownMenuSeparator />
       </DropdownMenuContent>
     </DropdownMenu>
   );

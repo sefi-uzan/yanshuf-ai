@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import DashboardNavItem from "../../components/navigation/DashboardNavItem";
+import { buttonVariants } from "@/app/components/ui/button";
 
 export const settingsNavItems = [
   {
@@ -19,11 +20,21 @@ export const settingsNavItems = [
 ];
 const SettingsNav = () => {
   const pathname = usePathname();
+
   return (
     <aside className="hidden lg:mx-4 lg:w-1/5 md:block">
       <nav className="flex lg:flex-col md:flex-row">
         {settingsNavItems.map((item) => (
-          <DashboardNavItem key={item.name} item={item} />
+          <DashboardNavItem
+            name={item.name}
+            href={item.href}
+            key={item.href}
+            className={
+              pathname === item.href
+                ? buttonVariants({ variant: "secondary" })
+                : buttonVariants({ variant: "ghost" })
+            }
+          />
         ))}
       </nav>
       <div
