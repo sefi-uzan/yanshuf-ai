@@ -16,7 +16,7 @@ test.describe("Navbar tests", () => {
     await expect(homePage.navbar.mobileThemeToggle).toBeVisible();
   });
 
-  test.only("logged out navbar items are displayed", async ({ homePage }) => {
+  test("logged out navbar items are displayed", async ({ homePage }) => {
     await expect(homePage.navbar.pricingLink).toContainText("Pricing");
     await expect(homePage.navbar.signInLink).toContainText("Sign in");
     await expect(homePage.navbar.getStartedLink).toContainText("Get started");
