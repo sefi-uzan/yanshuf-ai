@@ -39,9 +39,9 @@ test.describe("Navbar tests", () => {
       homePage,
     }) => {
       await homePage.navbar.mobileMenu.click();
-      await expect(homePage.navbar.mobileMenuPricing).toBeVisible();
-      await expect(homePage.navbar.mobileMenuSignIn).toBeVisible();
-      await expect(homePage.navbar.mobileMenuGetStarted).toBeVisible();
+      await expect(homePage.navbar.mobileMenuItems.pricing).toBeVisible();
+      await expect(homePage.navbar.mobileMenuItems.signIn).toBeVisible();
+      await expect(homePage.navbar.mobileMenuItems.getStarted).toBeVisible();
     });
 
     test("logged out mobile menu is displayed on #mobile", async ({
