@@ -12,6 +12,7 @@ type DashboardNavItem = {
 const NavbarItem = ({ name, href }: DashboardNavItem) => {
   return (
     <Link
+      data-testid="navbar-item"
       href={`${href}`}
       key={href}
       className={cn(

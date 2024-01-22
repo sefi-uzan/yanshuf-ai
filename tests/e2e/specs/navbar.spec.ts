@@ -7,54 +7,65 @@ test.describe("Navbar tests", () => {
       await expect(homePage.navbar.navbarTitle).toContainText("Yanshuf.ai");
     });
 
-    test("logged out displays the theme toggle #no-mobile", async ({
-      homePage,
-    }) => {
+    test("logged out displays the theme toggle", async ({ homePage }) => {
       await expect(homePage.navbar.themeToggle).toBeVisible();
     });
 
-    test("logged out displays the theme toggle #mobile", async ({
-      homePage,
-    }) => {
-      await expect(homePage.navbar.mobileThemeToggle).toBeVisible();
+    test("logged out navbar has 3 items #no-mobile", async ({ homePage }) => {
+      await expect(homePage.navbar.navbarItems).toHaveCount(3);
     });
 
     test("logged out navbar items have the correct text #no-mobile", async ({
       homePage,
     }) => {
-      await expect(homePage.navbar.pricingLink).toContainText("Pricing");
-      await expect(homePage.navbar.signInLink).toContainText("Sign in");
-      await expect(homePage.navbar.getStartedLink).toContainText("Get started");
+      await expect(homePage.navbar.navbarItems.nth(0)).toContainText("Pricing");
+      await expect(homePage.navbar.navbarItems.nth(1)).toContainText("Sign in");
+      await expect(homePage.navbar.navbarItems.nth(2)).toContainText(
+        "Get started"
+      );
     });
 
     test("logged out navbar items are not visible on #mobile", async ({
       homePage,
     }) => {
-      await expect(homePage.navbar.pricingLink).toBeHidden();
-      await expect(homePage.navbar.signInLink).toBeHidden();
-      await expect(homePage.navbar.getStartedLink).toBeHidden();
+      await expect(homePage.navbar.navbarItems.nth(0)).toBeHidden();
+      await expect(homePage.navbar.navbarItems.nth(1)).toBeHidden();
+      await expect(homePage.navbar.navbarItems.nth(2)).toBeHidden();
+    });
+
+    test("logged out menu items are not displayed when menu is closed #mobile", async ({
+      homePage,
+    }) => {
+      await expect(homePage.navbar.mobileMenuItems.nth(0)).toBeHidden();
+      await expect(homePage.navbar.mobileMenuItems.nth(1)).toBeHidden();
+      await expect(homePage.navbar.mobileMenuItems.nth(2)).toBeHidden();
+    });
+
+    test("logged out mobile menu has 3 items #mobile", async ({ homePage }) => {
+      await homePage.navbar.mobileMenu.click();
+      await expect(homePage.navbar.mobileMenuItems).toHaveCount(3);
     });
 
     test("logged out clicking on the menu will show navbar items #mobile", async ({
       homePage,
     }) => {
       await homePage.navbar.mobileMenu.click();
-      await expect(homePage.navbar.mobileMenuItems.pricing).toBeVisible();
-      await expect(homePage.navbar.mobileMenuItems.signIn).toBeVisible();
-      await expect(homePage.navbar.mobileMenuItems.getStarted).toBeVisible();
+      await expect(homePage.navbar.mobileMenuItems.nth(0)).toBeVisible();
+      await expect(homePage.navbar.mobileMenuItems.nth(1)).toBeVisible();
+      await expect(homePage.navbar.mobileMenuItems.nth(2)).toBeVisible();
     });
 
     test("logged out menu items will have the correct names #mobile", async ({
       homePage,
     }) => {
       await homePage.navbar.mobileMenu.click();
-      await expect(homePage.navbar.mobileMenuItems.pricing).toHaveText(
+      await expect(homePage.navbar.mobileMenuItems.nth(0)).toHaveText(
         "Pricing"
       );
-      await expect(homePage.navbar.mobileMenuItems.signIn).toHaveText(
+      await expect(homePage.navbar.mobileMenuItems.nth(1)).toHaveText(
         "Sign in"
       );
-      await expect(homePage.navbar.mobileMenuItems.getStarted).toHaveText(
+      await expect(homePage.navbar.mobileMenuItems.nth(2)).toHaveText(
         "Get started"
       );
     });
@@ -71,35 +82,44 @@ test.describe("Navbar tests", () => {
       await expect(homePage.navbar.navbarTitle).toContainText("Yanshuf.ai");
     });
 
-    test("logged in displays the theme toggle #no-mobile", async ({
-      homePage,
-    }) => {
+    test("logged in displays the theme toggle", async ({ homePage }) => {
       await expect(homePage.navbar.themeToggle).toBeVisible();
     });
 
-    test("logged in displays the theme toggle #mobile", async ({
-      homePage,
-    }) => {
-      await expect(homePage.navbar.mobileThemeToggle).toBeVisible();
-    });
-
-    test("logged in clicking on the user menu will show navbar items #mobile", async ({
+    test("logged in user menu user details will have correct text", async ({
       homePage,
     }) => {
       await homePage.navbar.userMenu.click();
-      await expect(homePage.navbar.userMenuItems.name).toHaveText("Yanshuf");
-      await expect(homePage.navbar.userMenuItems.email).toHaveText(
+      await expect(homePage.navbar.userDetails.locator("p").nth(0)).toHaveText(
+        "Yanshuf"
+      );
+      await expect(homePage.navbar.userDetails.locator("p").nth(1)).toHaveText(
         "sefiuzan812@gmail.com"
       );
-      await expect(homePage.navbar.userMenuItems.dashboard).toBeVisible();
-      await expect(homePage.navbar.userMenuItems.settings).toBeVisible();
-      await expect(homePage.navbar.userMenuItems.subscription).toBeVisible();
-      await expect(homePage.navbar.userMenuItems.signOut).toBeVisible();
     });
 
-    test("logged in mobile menu is displayed on #mobile", async ({
+    test("logged in user menu items will have the correct amount", async ({
       homePage,
     }) => {
+      await homePage.navbar.userMenu.click();
+      await expect(homePage.navbar.userMenuItems).toHaveCount(4);
+    });
+
+    test("logged in user menu items will have the correct texts", async ({
+      homePage,
+    }) => {
+      await homePage.navbar.userMenu.click();
+      await expect(homePage.navbar.userMenuItems.nth(0)).toHaveText(
+        "Dashboard"
+      );
+      await expect(homePage.navbar.userMenuItems.nth(1)).toHaveText("Settings");
+      await expect(homePage.navbar.userMenuItems.nth(2)).toHaveText(
+        "Subscription"
+      );
+      await expect(homePage.navbar.userMenuItems.nth(3)).toHaveText("Sign out");
+    });
+
+    test("logged in user menu is displayed", async ({ homePage }) => {
       await expect(homePage.navbar.userMenu).toBeVisible();
     });
   });

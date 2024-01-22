@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import NavbarItem from "./NavbarItem.";
+import NavbarItem from "./NavbarItem";
 import { navbarItems } from "./NavbarItems";
 import { Button } from "../ui/button";
 
@@ -19,7 +19,7 @@ const MobileNav = () => {
   return (
     <DropdownMenu open={open} onOpenChange={(open) => setOpen(open)}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" data-testid="mobile-menu">
           <Menu />
         </Button>
       </DropdownMenuTrigger>
@@ -27,6 +27,7 @@ const MobileNav = () => {
         {navbarItems.map((item) => {
           return !item.private ? (
             <DropdownMenuItem
+              data-testid="mobile-navbar-item"
               key={item.name}
               className="cursor-pointer"
               onClick={(open) => setOpen(!open)}
