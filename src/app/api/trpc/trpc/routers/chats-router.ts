@@ -76,6 +76,12 @@ export const chatsRouter = router({
 
       if (!chat) throw new TRPCError({ code: "NOT_FOUND" });
 
+      await db.message.deleteMany({
+        where: {
+          chatId: chat.id,
+        },
+      });
+      
       await db.chat.delete({
         where: {
           id: input.id,

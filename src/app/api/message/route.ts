@@ -85,12 +85,11 @@ export const POST = async (req: NextRequest) => {
       {
         role: "user",
         content: `Use the following pieces of context (or previous conversaton if needed) to answer the users question in markdown format. \nIf you don't know the answer, just say that you don't know, don't try to make up an answer.
-                  You are an expert QA Engineer and you will help with QA tasks, in the context you have access to project tickets, all tickets contain an id, summary, description.
-                  You will be asked questions about these tickets
+                  Please provide as much context as possible for the user from the context you were given and previous conversation. You are expected to help with any details you might be asked about in the context you were given.
         
   \n----------------\n
   
-  PREVIOUS CONVERSATION:
+  PREVIOUS CONVERSATION (everytime I say previous conversation I mean the piece of content below here just above the context)::
   ${formattedPrevMessages.map((message) => {
     if (message.role === "user") return `User: ${message.content}\n`;
     return `Assistant: ${message.content}\n`;
@@ -98,7 +97,7 @@ export const POST = async (req: NextRequest) => {
   
   \n----------------\n
   
-  CONTEXT:
+  CONTEXT (everytime I say context I mean the piece of content below here just above the user input):
   ${results.map((r) => r.pageContent).join("\n\n")}
   
   USER INPUT: ${message}`,

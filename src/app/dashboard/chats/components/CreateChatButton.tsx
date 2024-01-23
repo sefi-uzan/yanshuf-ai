@@ -23,7 +23,7 @@ const ChatCreation = () => {
 
   const { mutate: createChat, isLoading } = trpc.chats.createChat.useMutation({
     onSuccess: (chat) => {
-      router.push(`/dashboard/${chat.id}`);
+      router.push(`/dashboard/chats/${chat.id}`);
     },
     onError: (error) => {
       toast({

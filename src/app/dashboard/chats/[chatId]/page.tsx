@@ -29,15 +29,7 @@ const Page = async ({ params }: PageProps) => {
 
   if (!chat) notFound();
 
-  return (
-    <div className="flex-1 justify-between flex flex-col h-[calc(100vh-6.5rem)]">
-      <div className="mx-auto w-full grow lg:flex">
-        <div className="shrink-0 flex-[0.75] border-t border-primary-foreground lg:border-l lg:border-t-0">
-          <ChatWrapper chatId={chat.id} />
-        </div>
-      </div>
-    </div>
-  );
+  return <ChatWrapper chatId={chat.id} />;
 };
 
 export default Page;
