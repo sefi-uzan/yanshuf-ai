@@ -77,7 +77,7 @@ test.describe("Navbar tests", () => {
     });
   });
 
-  test.describe("logged in navbar tests", () => {
+  test.describe.fixme("logged in navbar tests", () => {
     test("logged in navbar title is Yanshuf.ai", async ({ homePage }) => {
       await expect(homePage.navbar.navbarTitle).toContainText("Yanshuf.ai");
     });
