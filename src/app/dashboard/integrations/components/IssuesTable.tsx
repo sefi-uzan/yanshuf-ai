@@ -21,7 +21,6 @@ import { useToast } from "@/app/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { intlFormat } from "date-fns";
-import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -79,7 +78,7 @@ const IssuesTable = () => {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Issue ID</TableHead>
-            <TableHead>Type</TableHead>
+            <TableHead>Priorty</TableHead>
             <TableHead>Summary</TableHead>
             <TableHead>Created At</TableHead>
             <TableHead>Updated At</TableHead>
@@ -92,8 +91,9 @@ const IssuesTable = () => {
               <TableCell className="font-medium">{issue.id}</TableCell>
               <TableCell>
                 {
-                  issue.customFields.filter((field) => field.name === "Type")[0]
-                    .value.name
+                  issue.customFields.filter(
+                    (field) => field.name === "Priority"
+                  )[0].value.name
                 }
               </TableCell>
               <TableCell>
@@ -105,7 +105,7 @@ const IssuesTable = () => {
                 >
                   {
                     issue.customFields.filter(
-                      (field) => field.name === "Priority"
+                      (field) => field.name === "Type"
                     )[0].value.name
                   }
                 </span>

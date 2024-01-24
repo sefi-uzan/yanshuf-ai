@@ -52,7 +52,7 @@ export const youtrackRouter = router({
     return { activeProject: dbUser.youtrackActiveProject };
   }),
 
-  getUserIssues: privateProcedure
+  getProjectIssues: privateProcedure
     .input(
       z.object({
         projectId: z.string().optional(),

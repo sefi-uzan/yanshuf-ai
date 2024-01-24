@@ -28,6 +28,7 @@ export const userRouter = router({
         name: dbUser.name,
         email: dbUser.email,
         image: dbUser.image,
+        youtrackActiveProject: dbUser.youtrackActiveProject,
       },
     };
   }),

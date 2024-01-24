@@ -29,6 +29,12 @@ export class Youtrack {
     );
   }
 
+  async getProjectCustomFields(projectId: string) {
+    return await this.axios.get<Issue[]>(
+      `/api/admin/projects/${projectId}/customFields?fields=id,field(name)`
+    );
+  }
+
   async searchProjectIssues(query?: string) {
     return await this.axios.get<Issue[]>(
       `/api/issues?query=${encodeURIComponent(
