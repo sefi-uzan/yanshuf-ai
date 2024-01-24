@@ -1,4 +1,4 @@
-import { Issues, Projects } from "@/types/types";
+import { Issue, Projects } from "@/types/types";
 import axios, { AxiosInstance } from "axios";
 export class Youtrack {
   baseUrl: string;
@@ -24,8 +24,17 @@ export class Youtrack {
   }
 
   async getProjcetIssues(projectId: string) {
-    return await this.axios.get<Issues[]>(
-      `/api/admin/projects/${projectId}/issues?fields=id,type,description,summary`
+    return await this.axios.get<Issue[]>(
+      `/api/admin/projects/${projectId}/issues?fields=id,summary,description,created,updated,customFields(id,name,value(id,name))`
+    );
+  }
+
+  async searchProjectIssues(query?: string) {
+    return await this.axios.get<Issue[]>(
+      `/api/issues?query=${encodeURIComponent(
+        query || ""
+      )}&fields=id,summary,description,created,updated,customFields(id,name,value(id,name))
+      `
     );
   }
 }

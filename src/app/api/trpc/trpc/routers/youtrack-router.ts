@@ -80,6 +80,33 @@ export const youtrackRouter = router({
       const response = await youtrack.getProjcetIssues(input.projectId);
       return { issues: response.data };
     }),
+  searchProjectIssues: privateProcedure
+    .input(
+      z.object({
+        query: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      console.log("searching for projects");
+      const { userId } = ctx;
+
+      const dbUser = await db.user.findFirst({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (!dbUser || dbUser.youtrackToken === "")
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      const youtrack = new Youtrack(
+        dbUser.youtrackBaseUrl,
+        dbUser.youtrackToken
+      );
+      const response = await youtrack.searchProjectIssues(input.query);
+      console.log(response.data);
+      return { issues: response.data };
+    }),
   setUserActiveProject: privateProcedure
     .input(
       z.object({

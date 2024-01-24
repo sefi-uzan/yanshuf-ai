@@ -11,12 +11,33 @@ type Projects = {
   $type: string;
 };
 
-type Issues = {
-  type: string;
+interface Issue {
+  $type: string;
   id: string;
-  description: string;
+  name: string;
+
+  updated: number;
+  created: number;
+
   summary: string;
-};
+  description: string;
+
+  customFields: CustomField[];
+}
+
+interface CustomField {
+  $type: string;
+  id: string;
+  name: string;
+
+  value: CustomFieldValue;
+}
+
+interface CustomFieldValue {
+  $type: string;
+  id: string;
+  name: string;
+}
 
 type User = {
   user: {
