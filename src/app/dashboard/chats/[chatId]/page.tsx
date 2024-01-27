@@ -2,6 +2,7 @@ import { getAuthSession } from "@/config/auth-options";
 import { db } from "@/db";
 import { notFound, redirect } from "next/navigation";
 import ChatWrapper from "./components/chat/ChatWrapper";
+import { trpc } from "@/app/_trpc/client";
 
 interface PageProps {
   params: {
@@ -14,17 +15,10 @@ const Page = async ({ params }: PageProps) => {
 
   const session = await getAuthSession();
 
-  if (!session) return new Response("Unauthorized", { status: 401 });
+  if (!session?.user.id) return new Response("Unauthorized", { status: 401 });
 
-  const { user } = session;
-
-  if (!user?.id) redirect(`/auth-callback?origin=dashboard/${chatId}`);
-
-  const chat = await db.chat.findFirst({
-    where: {
-      id: chatId,
-      userId: user.id,
-    },
+  const { data: chat } = trpc.chats.getChat.useQuery({
+    id: chatId,
   });
 
   if (!chat) notFound();
