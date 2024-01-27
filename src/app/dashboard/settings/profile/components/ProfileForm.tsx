@@ -42,7 +42,7 @@ const ProfileForm = ({ user }: User) => {
   const { toast } = useToast();
 
   if (!user) redirect("/auth/sign-in");
-
+  
   const { mutate } = trpc.user.updateUserInfo.useMutation({
     onSuccess: () => {
       utils.user.getUserInfo.invalidate();
@@ -60,10 +60,9 @@ const ProfileForm = ({ user }: User) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: user.username,
       name: user.name,
       email: user.email,
-      image: user.image,
+      image: user.image || "./avatar.jpg",
     },
   });
 
@@ -72,7 +71,7 @@ const ProfileForm = ({ user }: User) => {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="image"
@@ -124,28 +123,12 @@ const ProfileForm = ({ user }: User) => {
             </FormItem>
           )}
         />
-        <div>
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className="space-y-4">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="col-span-1">
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder="shadcn" {...field} />
@@ -155,6 +138,7 @@ const ProfileForm = ({ user }: User) => {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="email"
@@ -170,7 +154,9 @@ const ProfileForm = ({ user }: User) => {
             )}
           />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="float-right">
+          Submit
+        </Button>
       </form>
     </Form>
   );

@@ -89,6 +89,9 @@ const Messages = ({ chatId }: MessagesProps) => {
           <Skeleton className="h-16" />
           <Skeleton className="h-16" />
           <Skeleton className="h-16" />
+          <Skeleton className="h-16" />
+          <Skeleton className="h-16" />
+          <Skeleton className="h-16" />
         </div>
       ) : (
         <div className="flex-1 flex flex-col items-center justify-center gap-2">

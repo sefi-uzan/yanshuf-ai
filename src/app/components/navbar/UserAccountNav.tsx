@@ -18,7 +18,7 @@ import { navbarItems } from "./NavbarItems";
 interface UserAccountNavProps {
   email: string | undefined;
   name: string;
-  imageUrl: string;
+  imageUrl?: string | null;
   isSubscribed: boolean;
 }
 

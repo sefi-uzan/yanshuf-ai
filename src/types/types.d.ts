@@ -5,11 +5,9 @@ type RouterOutput = inferRouterOutputs<AppRouter>;
 
 type User = {
   user: {
-    username: string;
     name: string;
     email: string;
     image: string;
-    youtrackActiveProject: string | null;
   };
 };
 

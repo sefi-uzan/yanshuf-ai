@@ -10,10 +10,9 @@ const Page = () => {
   while (isLoading) return <Loader2 className="h-4 w-4 animate-spin" />;
 
   if (!data?.user) redirect("/sign-in");
-
   return (
-    <div className="w-full">
-      <div className="space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+    <div className="w-full space-y-2">
+      <div className="lg:flex-row lg:space-x-12 lg:space-y-0">
         <div className="flex-1">
           <div className="space-y-6">
             <div>
@@ -23,7 +22,6 @@ const Page = () => {
               </p>
             </div>
             <div className="shrink-0 bg-border h-[1px] w-full"></div>
-            <form className="space-y-8"></form>
           </div>
         </div>
       </div>

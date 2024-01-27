@@ -37,11 +37,18 @@ const Chats = ({ subscriptionPlan }: PageProps) => {
   });
 
   return (
-    <main className="mx-auto max-w-7xl md:p-10">
-      <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-primary-foreground pb-5 sm:flex-row sm:items-center sm:gap-0">
-        <h1 className="mb-3 font-bold text-5xl ">My chats</h1>
+    <main className="mx-auto max-w-7xl p-6">
+      <div className="space-y-2 flex flex-col md:flex-row justify-between md:items-end">
+        <div className="flex flex-col justify-start">
+          <h2 className="text-2xl font-bold tracking-tight">Chats</h2>
+          <p className="text-muted-foreground">
+            This is where you manage all your chats
+          </p>
+        </div>
         <CreateChatButton isSubscribed={subscriptionPlan.isSubscribed} />
       </div>
+
+      <div role="none" className="shrink-0 bg-border h-[1px] w-full my-6"></div>
 
       {chats && chats?.length !== 0 ? (
         <ul className="mt-8 grid grid-cols-1 gap-6 divide-y md:grid-cols-2 lg:grid-cols-3">

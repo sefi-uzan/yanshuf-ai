@@ -98,6 +98,8 @@ const ChatCreationForm = ({ isSubscribed }: { isSubscribed: boolean }) => {
 
                     form.setValue("fileId", res[0].serverData?.fileId);
                     form.setValue("fileName", res[0].name);
+
+                    form.trigger("fileId");
                   }}
                 >
                   {({ getRootProps }) => (
@@ -130,7 +132,7 @@ const ChatCreationForm = ({ isSubscribed }: { isSubscribed: boolean }) => {
           className="disabled:bg-secondary-foreground"
           disabled={isUploading || !form.formState.isValid}
         >
-          Submit
+          {isLoading ? <Loader2 /> : "Submit"}
         </Button>
       </form>
     </Form>

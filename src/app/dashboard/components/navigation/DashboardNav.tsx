@@ -48,7 +48,7 @@ const DashboardNav = ({ children }: Props) => {
         </div>
         <ScrollBar orientation="horizontal" className="invisible" />
       </ScrollArea>
-      <Card>{children}</Card>
+      <Card className="mb-4">{children}</Card>
     </div>
   );
 };

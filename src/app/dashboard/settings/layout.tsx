@@ -4,7 +4,7 @@ import SettingsNav from "./components/SettingsNav";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className="p-10 pb-16">
+      <div className="p-6">
         <div className="space-y-0.5">
           <div className="flex flex-row justify-start items-center space-x-4">
             <h2 className="text-2xl font-bold tracking-tight">Settings</h2>

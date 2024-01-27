@@ -64,7 +64,7 @@ const Navbar = async () => {
                   !session.user?.name ? "Your Account" : `${session.user?.name}`
                 }
                 email={session.user?.email ?? ""}
-                imageUrl={session.user?.image ?? ""}
+                imageUrl={session.user?.image}
                 isSubscribed={subscriptionPlan?.isSubscribed}
               />
             )}

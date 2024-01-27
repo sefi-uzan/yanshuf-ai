@@ -65,7 +65,11 @@ const UserAuthFormm = () => {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input
+                  placeholder="shadcn"
+                  {...field}
+                  autoComplete="username"
+                />
               </FormControl>
               <FormDescription>
                 This is your public display name.
@@ -81,7 +85,12 @@ const UserAuthFormm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="pass" {...field} />
+                <Input
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="pass"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 Password should be 8 characters or longer.
