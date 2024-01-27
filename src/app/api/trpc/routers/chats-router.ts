@@ -45,6 +45,18 @@ export const chatsRouter = router({
 
       if (existingChat) throw new TRPCError({ code: "CONFLICT" });
 
+      const fileUploadSuccess = await db.file.findFirst({
+        where: {
+          id: input.fileId,
+        },
+        select: {
+          uploadStatus: true,
+        },
+      });
+
+      if (fileUploadSuccess?.uploadStatus !== "SUCCESS")
+        throw new TRPCError({ code: "NOT_FOUND" });
+
       const chat = await db.chat.create({
         data: {
           name: input.name,
