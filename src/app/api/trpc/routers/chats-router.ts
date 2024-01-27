@@ -16,7 +16,7 @@ export const chatsRouter = router({
 
   getChat: privateProcedure
     .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
 
       const chat = await db.chat.findFirst({
