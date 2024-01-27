@@ -3,14 +3,13 @@
 import { trpc } from "@/app/_trpc/client";
 import { Button } from "@/app/components/ui/button";
 import EmptyState from "@/app/components/ui/empty-state";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { format } from "date-fns";
 import { Loader2, Trash } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import CreateChatButton from "./CreateChatButton";
-import UploadButton from "./UploadDropzone";
-import { getUserSubscriptionPlan } from "@/lib/stripe";
 
 interface PageProps {
   subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
