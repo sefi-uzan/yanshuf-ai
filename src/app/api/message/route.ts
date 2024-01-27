@@ -5,10 +5,9 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { NextRequest } from "next/server";
 
+import { getAuthSession } from "@/config/auth-options";
 import { Pinecone } from "@pinecone-database/pinecone";
 import { OpenAIStream, StreamingTextResponse } from "ai";
-import { getServerSession } from "next-auth";
-import { getAuthSession } from "@/config/auth-options";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();

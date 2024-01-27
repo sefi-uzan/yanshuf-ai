@@ -59,6 +59,7 @@ model User {
   sessions    Session[]
   Message Message[]
   Chat Chat[]
+  File    File[]
 
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
@@ -71,6 +72,24 @@ enum UploadStatus {
   PROCESSING
   FAILED
   SUCCESS
+}
+
+model File {
+  id   String @id @default(cuid())
+  name String
+
+  uploadStatus UploadStatus @default(PENDING)
+
+  url      String
+  key      String
+  chats    Chat[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+
+  @@index([userId])
 }
 model Message {
   id   String @id @default(cuid())
@@ -88,7 +107,6 @@ model Message {
 
   @@index([chatId])
   @@index([userId])
-
 }
 
 model Chat {
@@ -102,5 +120,9 @@ model Chat {
   User      User?    @relation(fields: [userId], references: [id])
   userId    String?
 
-    @@index([userId])
+  File      File?    @relation(fields: [fileId], references: [id])
+  fileId    String?
+
+  @@index([fileId])
+  @@index([userId])
 }

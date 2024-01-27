@@ -2,7 +2,6 @@
 
 import { useSetOpen } from "@/app/components/hooks/useSetOpen";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 type DashboardNavItem = {
   href: string;
@@ -11,7 +10,6 @@ type DashboardNavItem = {
 };
 
 const DashboardNavItem = ({ href, name, className }: DashboardNavItem) => {
-  const pathname = usePathname();
   const { setOpen } = useSetOpen();
 
   return (

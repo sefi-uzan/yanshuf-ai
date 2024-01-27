@@ -1,6 +1,5 @@
 import { getAuthSession } from "@/config/auth-options";
 import { TRPCError, initTRPC } from "@trpc/server";
-import { getServerSession } from "next-auth";
 
 const t = initTRPC.create();
 const middleware = t.middleware;

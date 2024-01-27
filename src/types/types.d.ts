@@ -1,43 +1,7 @@
-import { AppRouter } from "@/app/api/trpc/trpc";
+import { AppRouter } from "@/app/api/trpc";
 import { inferRouterOutputs } from "@trpc/server";
 
-type Credentials = RouterOutput["youtrack"]["getUserYoutrackCredentials"];
-
 type RouterOutput = inferRouterOutputs<AppRouter>;
-
-type Projects = {
-  shortName: string;
-  id: string;
-  $type: string;
-};
-
-interface Issue {
-  $type: string;
-  id: string;
-  name: string;
-
-  updated: number;
-  created: number;
-
-  summary: string;
-  description: string;
-
-  customFields: CustomField[];
-}
-
-interface CustomField {
-  $type: string;
-  id: string;
-  name: string;
-
-  value: CustomFieldValue;
-}
-
-interface CustomFieldValue {
-  $type: string;
-  id: string;
-  name: string;
-}
 
 type User = {
   user: {

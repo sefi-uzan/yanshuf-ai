@@ -10,10 +10,6 @@ export const settingsNavItems = [
     href: "/dashboard/settings/profile",
   },
   {
-    name: "Integrations",
-    href: "/dashboard/settings/integrations",
-  },
-  {
     name: "Account",
     href: "/dashboard/settings/account",
   },

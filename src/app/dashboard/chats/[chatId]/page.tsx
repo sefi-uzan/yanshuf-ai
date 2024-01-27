@@ -1,7 +1,7 @@
 import { getAuthSession } from "@/config/auth-options";
 import { db } from "@/db";
 import { notFound, redirect } from "next/navigation";
-import ChatWrapper from "../components/chat/ChatWrapper";
+import ChatWrapper from "./components/chat/ChatWrapper";
 
 interface PageProps {
   params: {

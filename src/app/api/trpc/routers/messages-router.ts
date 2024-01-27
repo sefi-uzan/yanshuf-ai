@@ -1,4 +1,4 @@
-import { privateProcedure, router } from "@/app/api/trpc/trpc/trpc";
+import { privateProcedure, router } from "@/app/api/trpc/trpc";
 import { INFINITE_QUERY_LIMIT } from "@/config/infinite-query";
 import { db } from "@/db";
 import { TRPCError } from "@trpc/server";

@@ -1,15 +1,9 @@
-import {
-  privateProcedure,
-  publicProcedure,
-  router,
-} from "@/app/api/trpc/trpc/trpc";
-import { getAuthSession } from "@/config/auth-options";
+import { privateProcedure, router } from "@/app/api/trpc/trpc";
 import { PLANS } from "@/config/stripe";
 import { db } from "@/db";
 import { getUserSubscriptionPlan, stripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
 import { TRPCError } from "@trpc/server";
-import { getServerSession } from "next-auth";
 
 export const authRouter = router({
   createStripeSession: privateProcedure.mutation(async ({ ctx }) => {

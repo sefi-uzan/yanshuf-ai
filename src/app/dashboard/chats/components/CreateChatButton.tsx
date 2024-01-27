@@ -14,8 +14,9 @@ import { useToast } from "@/app/components/ui/use-toast";
 import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { Loader2 } from "lucide-react";
+import UploadDropzone from "./UploadDropzone";
 
-const ChatCreation = () => {
+const ChatCreation = ({ isSubscribed }: { isSubscribed: boolean }) => {
   const router = useRouter();
 
   const [name, setName] = useState<string>("");
@@ -56,6 +57,7 @@ const ChatCreation = () => {
           }}
         />
       </div>
+      <UploadDropzone isSubscribed={isSubscribed} />
       <Button type="submit" variant="secondary" className="w-full mt-4">
         {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Submit"}
       </Button>
@@ -63,7 +65,7 @@ const ChatCreation = () => {
   );
 };
 
-const CreateChatButton = () => {
+const CreateChatButton = ({ isSubscribed }: { isSubscribed: boolean }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -80,7 +82,7 @@ const CreateChatButton = () => {
       </DialogTrigger>
 
       <DialogContent className="max-w-sm">
-        <ChatCreation />
+        <ChatCreation isSubscribed={isSubscribed} />
       </DialogContent>
     </Dialog>
   );

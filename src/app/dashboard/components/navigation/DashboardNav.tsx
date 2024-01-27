@@ -3,7 +3,6 @@
 import { buttonVariants } from "@/app/components/ui/button";
 import { Card } from "@/app/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/app/components/ui/scroll-area";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import DashboardNavItem from "./DashboardNavItem";
@@ -16,10 +15,6 @@ const dashboardNavItems = [
   {
     name: "Chats",
     href: "/dashboard/chats",
-  },
-  {
-    name: "Integrations",
-    href: "/dashboard/integrations",
   },
   {
     name: "Settings",

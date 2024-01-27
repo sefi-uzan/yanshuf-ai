@@ -1,4 +1,4 @@
-import { publicProcedure, router } from "@/app/api/trpc/trpc/trpc";
+import { publicProcedure, router } from "@/app/api/trpc/trpc";
 import { getAuthSession } from "@/config/auth-options";
 import { db } from "@/db";
 import { User } from "@/types/types";
