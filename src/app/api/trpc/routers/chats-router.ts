@@ -1,5 +1,6 @@
 import { privateProcedure, router } from "@/app/api/trpc/trpc";
 import { db } from "@/db";
+import { UploadStatus } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
@@ -54,7 +55,7 @@ export const chatsRouter = router({
         },
       });
 
-      if (fileUploadSuccess?.uploadStatus !== "SUCCESS")
+      if (fileUploadSuccess?.uploadStatus !== UploadStatus.SUCCESS)
         throw new TRPCError({ code: "NOT_FOUND" });
 
       const chat = await db.chat.create({
@@ -87,6 +88,12 @@ export const chatsRouter = router({
       await db.message.deleteMany({
         where: {
           chatId: chat.id,
+        },
+      });
+
+      await db.file.delete({
+        where: {
+          id: chat.fileId || undefined,
         },
       });
 

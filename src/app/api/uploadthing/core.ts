@@ -2,12 +2,13 @@ import { db } from "@/db";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 import { getAuthSession } from "@/config/auth-options";
+import { PLANS } from "@/config/stripe";
 import { getPineconeClient } from "@/lib/pinecone";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
+import { UploadStatus } from "@prisma/client";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
-import { PLANS } from "@/config/stripe";
 
 const f = createUploadthing();
 
@@ -109,7 +110,7 @@ const fileUploadComplete = async ({
 
     const successFile = await db.file.update({
       data: {
-        uploadStatus: "SUCCESS",
+        uploadStatus: UploadStatus.SUCCESS,
       },
       where: {
         id: createdFile.id,
@@ -119,7 +120,7 @@ const fileUploadComplete = async ({
   } catch (err) {
     await db.file.update({
       data: {
-        uploadStatus: "FAILED",
+        uploadStatus: UploadStatus.FAILED,
       },
       where: {
         id: createdFile.id,
