@@ -28,7 +28,8 @@ const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  fileId: z.string(),
+  fileId: z.string().cuid(),
+  fileName: z.string(),
 });
 
 const ChatCreationForm = ({ isSubscribed }: { isSubscribed: boolean }) => {
@@ -36,7 +37,6 @@ const ChatCreationForm = ({ isSubscribed }: { isSubscribed: boolean }) => {
   const { startUpload, isUploading } = useUploadThing(
     isSubscribed ? "freePlanUploader" : "proPlanUploader"
   );
-  const utils = trpc.useUtils();
   const { toast } = useToast();
 
   const { mutate: createChat, isLoading } = trpc.chats.createChat.useMutation({
@@ -54,9 +54,6 @@ const ChatCreationForm = ({ isSubscribed }: { isSubscribed: boolean }) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "Chat name",
-    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -65,6 +62,20 @@ const ChatCreationForm = ({ isSubscribed }: { isSubscribed: boolean }) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="chat name" {...field} />
+              </FormControl>
+              <FormDescription>This is your chat name</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="fileId"
@@ -86,6 +97,7 @@ const ChatCreationForm = ({ isSubscribed }: { isSubscribed: boolean }) => {
                     }
 
                     form.setValue("fileId", res[0].serverData?.fileId);
+                    form.setValue("fileName", res[0].name);
                   }}
                 >
                   {({ getRootProps }) => (
@@ -96,35 +108,30 @@ const ChatCreationForm = ({ isSubscribed }: { isSubscribed: boolean }) => {
                         isUploading && "pointer-events-none"
                       )}
                     >
-                      {isUploading && (
+                      {isUploading ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <FormDescription>
+                          {form.getValues("fileName")
+                            ? form.getValues("fileName")
+                            : "Drag and drop a file or click to upload."}
+                        </FormDescription>
                       )}
                     </div>
                   )}
                 </Dropzone>
               </FormControl>
-              <FormDescription>
-                Click to upload or drag and drop.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>This is your chat name</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          className="disabled:bg-secondary-foreground"
+          disabled={isUploading || !form.formState.isValid}
+        >
+          Submit
+        </Button>
       </form>
     </Form>
   );
