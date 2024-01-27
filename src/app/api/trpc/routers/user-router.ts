@@ -24,11 +24,9 @@ export const userRouter = router({
 
     return {
       user: {
-        username: dbUser.username,
         name: dbUser.name,
         email: dbUser.email,
         image: dbUser.image,
-        youtrackActiveProject: dbUser.youtrackActiveProject,
       },
     };
   }),
@@ -53,7 +51,6 @@ export const userRouter = router({
         },
         data: {
           name: input.name,
-          username: input.username,
           email: input.email,
           image: input.image,
         },
