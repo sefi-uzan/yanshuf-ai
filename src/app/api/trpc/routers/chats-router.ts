@@ -32,7 +32,7 @@ export const chatsRouter = router({
     }),
 
   createChat: privateProcedure
-    .input(z.object({ name: z.string() }))
+    .input(z.object({ name: z.string(), fileId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
 
@@ -49,6 +49,7 @@ export const chatsRouter = router({
         data: {
           name: input.name,
           userId,
+          fileId: input.fileId,
         },
       });
 

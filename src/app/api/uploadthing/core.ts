@@ -59,15 +59,13 @@ const fileUploadComplete = async ({
       key: file.key,
       name: file.name,
       userId: metadata.userId,
-      url: `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`,
+      url: file.url,
       uploadStatus: "PROCESSING",
     },
   });
 
   try {
-    const response = await fetch(
-      `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`
-    );
+    const response = await fetch(file.url);
 
     const blob = await response.blob();
 
@@ -109,7 +107,7 @@ const fileUploadComplete = async ({
       namespace: createdFile.id,
     });
 
-    await db.file.update({
+    const successFile = await db.file.update({
       data: {
         uploadStatus: "SUCCESS",
       },
@@ -117,6 +115,7 @@ const fileUploadComplete = async ({
         id: createdFile.id,
       },
     });
+    return { fileId: successFile.id };
   } catch (err) {
     await db.file.update({
       data: {
