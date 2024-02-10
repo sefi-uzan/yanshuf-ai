@@ -43,9 +43,9 @@ const ProfileForm = ({ user }: User) => {
 
   if (!user) redirect("/auth/sign-in");
   
-  const { mutate } = trpc.user.updateUserInfo.useMutation({
+  const { mutate } = trpc.user.updateUser.useMutation({
     onSuccess: () => {
-      utils.user.getUserInfo.invalidate();
+      utils.user.getUser.invalidate();
       toast({
         title: "Success",
         description: "Your details have been updated successfully",

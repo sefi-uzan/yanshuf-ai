@@ -11,7 +11,17 @@ type User = {
   };
 };
 
+type DBFile = {
+  id: string;
+  name: string;
+  size: number;
+  url: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 type Messages = RouterOutput["messages"]["getMessages"]["messages"];
+type Assistant = RouterOutput["assistant"]["create"];
 
 type OmitText = Omit<Messages[number], "text">;
 

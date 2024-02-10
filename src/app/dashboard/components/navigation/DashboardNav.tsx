@@ -9,12 +9,12 @@ import DashboardNavItem from "./DashboardNavItem";
 
 const dashboardNavItems = [
   {
-    name: "Dashboard",
+    name: "Chats",
     href: "/dashboard/",
   },
   {
-    name: "Chats",
-    href: "/dashboard/chats",
+    name: "Assistants",
+    href: "/dashboard/assistants",
   },
   {
     name: "Settings",
