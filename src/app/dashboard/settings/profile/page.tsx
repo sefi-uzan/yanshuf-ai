@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import ProfileForm from "./components/ProfileForm";
 
 const Page = () => {
-  const { data, isLoading } = trpc.user.getUserInfo.useQuery();
+  const { data, isLoading } = trpc.user.getUser.useQuery();
   while (isLoading) return <Loader2 className="h-4 w-4 animate-spin" />;
 
   if (!data?.user) redirect("/sign-in");

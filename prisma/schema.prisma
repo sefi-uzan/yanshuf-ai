@@ -28,7 +28,6 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-
   @@index([userId])
 }
 
@@ -43,17 +42,15 @@ model Session {
 }
 
 model User {
-  id                String         @id @default(cuid())
-  name              String
-  image       String
-  email             String      @unique
-  emailVerified     DateTime?
+  id            String    @id @default(cuid())
+  name          String
+  image         String
+  email         String    @unique
+  emailVerified DateTime?
 
-  accounts    Account[]
-  sessions    Session[]
-  Message Message[]
-  Chat Chat[]
-  File    File[]
+  accounts   Account[]
+  sessions   Session[]
+  assistants Assistant[]
 
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
@@ -61,62 +58,33 @@ model User {
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 }
 
-enum UploadStatus {
-  PENDING
-  PROCESSING
-  FAILED
-  SUCCESS
-}
+model Assistant {
+  id           String  @id
+  name         String
+  description  String?
+  instructions String?
 
-model File {
-  id   String @id @default(cuid())
-  name String
+  file   File?   @relation(fields: [fileId], references: [id])
+  fileId String? @unique
 
-  uploadStatus UploadStatus @default(PENDING)
-
-  url      String
-  key      String
-  chats    Chat[]
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
-
-  @@index([userId])
-}
-model Message {
-  id   String @id @default(cuid())
-  text String @db.Text()
-
-  isUserMessage Boolean
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
-
-  Chat      Chat?    @relation(fields: [chatId], references: [id])
-  chatId    String?
-
-  @@index([chatId])
-  @@index([userId])
-}
-
-model Chat {
-  id String @id @default(cuid())
-  name String
-
-  messages Message[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
-
-  File      File?    @relation(fields: [fileId], references: [id])
-  fileId    String?
 
   @@index([fileId])
   @@index([userId])
+}
+
+model File {
+  id   String @id
+  name String
+  url  String
+  size Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Assistant Assistant?
 }

@@ -6,7 +6,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 export const userRouter = router({
-  getUserInfo: publicProcedure.query(async (): Promise<User> => {
+  getUser: publicProcedure.query(async (): Promise<User> => {
     const session = await getAuthSession();
 
     if (!session?.user.id || !session.user.email)
@@ -30,7 +30,7 @@ export const userRouter = router({
       },
     };
   }),
-  updateUserInfo: publicProcedure
+  updateUser: publicProcedure
     .input(
       z.object({
         name: z.string().optional(),
