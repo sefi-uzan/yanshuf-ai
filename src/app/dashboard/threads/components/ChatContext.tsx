@@ -13,7 +13,7 @@ type ChatContext = {
   isLoading: boolean;
   assistantId: string | undefined;
   threadId: string | null;
-  setThreadId: (threadId: string | null) => void;
+  setThreadId: any;
 };
 
 export const ChatContext = createContext<ChatContext>({
