@@ -26,7 +26,7 @@ export const POST = async (req: NextRequest) => {
       body.runId
     );
 
-    return run;
+    return NextResponse.json(run);
   } catch (error) {
     return NextResponse.error();
   }
