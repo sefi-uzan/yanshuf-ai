@@ -9,33 +9,33 @@ import {
 } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
 
+import { useToast } from "@/app/components/ui/use-toast";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
-import { useToast } from "@/app/components/ui/use-toast";
 
-import { useResizeDetector } from "react-resize-detector";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import SimpleBar from "simplebar-react";
 import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/app/components/ui/dialog";
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+} from "@/app/components/ui/drawer";
+import SimpleBar from "simplebar-react";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -84,13 +84,13 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Drawer>
+      <DrawerTrigger asChild>
         <Button variant="outline">View PDF</Button>
-      </DialogTrigger>
-      <DialogContent className="">
-        <div className="w-full rounded-md shadow flex flex-col items-center">
-          <div className="h-14 w-full border-b border-zinc-200 flex items-center justify-between px-2">
+      </DrawerTrigger>
+      <DrawerContent className="">
+        <div className="rounded-md shadow flex flex-col items-center">
+          <div className="h-14 border-b border-zinc-200 flex items-center justify-between px-2">
             <div className="flex items-center gap-1.5">
               <Button
                 disabled={currPage <= 1}
@@ -222,8 +222,8 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
             </SimpleBar>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </DrawerContent>
+    </Drawer>
   );
 };
 
