@@ -9,17 +9,18 @@ import { ChatContext } from "./ChatContext";
 const ThreadList = () => {
   const { data: threads, isLoading } = trpc.thread.list.useQuery();
 
-  const { setThreadId, threadId, setAssistantId } = useContext(ChatContext);
-
+  const { setThreadId, threadId, setAssistantId, setFileUrl } =
+    useContext(ChatContext);
 
   return (
-    <aside className=" w-1/4">
-      <nav className="flex flex-col space-y-4 mr-4">
+    <aside className="w-1/4 overflow-y-auto">
+      <nav className="flex flex-col space-y-4 mr-4 ">
         <Button
           variant={threadId === null ? "default" : "outline"}
           onClick={() => {
             setThreadId(null);
             setAssistantId("");
+            setFileUrl(undefined);
           }}
         >
           New Thread

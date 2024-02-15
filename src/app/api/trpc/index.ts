@@ -4,6 +4,7 @@ import { router } from "./trpc";
 import { assistantRouter } from "./routers/assistant-router";
 import { threadRouter } from "./routers/thread-router";
 import { messageRouter } from "./routers/message-router";
+import { fileRouter } from "./routers/file-router";
 
 export const appRouter = router({
   auth: authRouter,
@@ -11,6 +12,7 @@ export const appRouter = router({
   assistant: assistantRouter,
   thread: threadRouter,
   message: messageRouter,
+  file: fileRouter,
 });
 
 export type AppRouter = typeof appRouter;

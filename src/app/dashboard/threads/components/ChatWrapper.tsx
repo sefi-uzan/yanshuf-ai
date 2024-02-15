@@ -1,16 +1,20 @@
 "use client";
-import { trpc } from "@/app/_trpc/client";
 import { Card } from "@/app/components/ui/card";
-import { ChatContext, ChatContextProvider } from "./ChatContext";
 import ChatInput from "./ChatInput";
 import Messages from "./Messages";
+import PdfRenderer from "./PdfRenderer";
 import { SelectAssistant } from "./SelectAssistant";
 import { useContext } from "react";
+import { ChatContext } from "./ChatContext";
 
 const ChatWrapper = () => {
+  const { fileUrl } = useContext(ChatContext);
   return (
     <Card className="w-3/4 flex flex-col">
-      <SelectAssistant />
+      <div className="flex flex-row justify-between">
+        <SelectAssistant />
+        {fileUrl && <PdfRenderer url={fileUrl} />}
+      </div>
       <Messages />
       <ChatInput />
     </Card>

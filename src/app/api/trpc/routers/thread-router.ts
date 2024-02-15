@@ -16,7 +16,6 @@ export const threadRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
 
-      console.log("input", input);
 
       const realFileId = () => {
         if (input.fileId) {

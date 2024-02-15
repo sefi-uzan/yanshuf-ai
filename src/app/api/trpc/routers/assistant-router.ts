@@ -19,8 +19,9 @@ export const assistantRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
       const { name, description, instructions, fileId } = input;
+      const modifiedInstructions = `Please reply using markdown, with proper styling and spacing between elements, make your reply clear and consice and ask clarification questions if you need to, also follow the attached user instructions: ${instructions}`;
       let assistant = await openai.beta.assistants.create({
-        instructions,
+        instructions: modifiedInstructions,
         name,
         description,
         tools: [{ type: "retrieval" }],
@@ -44,7 +45,7 @@ export const assistantRouter = router({
           id: assistant.id,
           name: assistant.name || nanoid(6),
           description: assistant.description,
-          instructions: assistant.instructions,
+          instructions: instructions,
           fileId: assistant.file_ids[0],
           userId: userId,
         },
@@ -69,7 +70,7 @@ export const assistantRouter = router({
   }),
   retrieve: privateProcedure
     .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       const { id } = input;
       const { userId } = ctx;
 

@@ -14,6 +14,8 @@ type ChatContext = {
   assistantId: string | undefined;
   threadId: string | null;
   setThreadId: any;
+  fileUrl: string | undefined;
+  setFileUrl: (url: string | undefined) => void;
 };
 
 export const ChatContext = createContext<ChatContext>({
@@ -21,10 +23,12 @@ export const ChatContext = createContext<ChatContext>({
   setAssistantId: () => {},
   setMessage: () => {},
   setThreadId: () => {},
+  setFileUrl: () => {},
   message: "",
   isLoading: false,
   assistantId: undefined,
   threadId: null,
+  fileUrl: undefined,
 });
 
 interface Props {
@@ -36,8 +40,11 @@ export const ChatContextProvider = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [assistantId, setAssistantId] = useState<string>();
   const [threadId, setThreadId] = useQueryState("threadId");
+  const [fileUrl, setFileUrl] = useState<string | undefined>();
 
   const { mutate: getThread } = trpc.thread.getThread.useMutation();
+  const { mutate: getFile } = trpc.file.getFile.useMutation();
+  const { mutate: getAssistant } = trpc.assistant.retrieve.useMutation();
 
   useEffect(() => {
     if (threadId) {
@@ -49,12 +56,29 @@ export const ChatContextProvider = ({ children }: Props) => {
           onSuccess(data) {
             if (data?.assistantId) {
               setAssistantId(data.assistantId);
+              getAssistant(
+                { id: data.assistantId },
+                {
+                  onSuccess(data) {
+                    if (data?.fileId) {
+                      getFile(
+                        { id: data.fileId },
+                        {
+                          onSuccess(data) {
+                            setFileUrl(data?.url);
+                          },
+                        }
+                      );
+                    }
+                  },
+                }
+              );
             }
           },
         }
       );
     }
-  }, [getThread, threadId]);
+  }, [getThread, threadId, getAssistant, getFile]);
 
   const { mutate: createAndRun } = trpc.thread.createAndRun.useMutation();
   const { mutate: runThread } = trpc.thread.runThread.useMutation();
@@ -125,6 +149,8 @@ export const ChatContextProvider = ({ children }: Props) => {
   return (
     <ChatContext.Provider
       value={{
+        setFileUrl,
+        fileUrl,
         setThreadId,
         handleSubmit,
         message,

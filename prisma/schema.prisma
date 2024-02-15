@@ -63,7 +63,7 @@ model Assistant {
   id           String  @id
   name         String
   description  String?
-  instructions String?
+  instructions String? @db.Text
 
   file   File?   @relation(fields: [fileId], references: [id], onDelete: Cascade)
   fileId String? @unique
