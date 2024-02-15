@@ -144,7 +144,6 @@ const CreateAssistantForm = ({ setOpen }: CreateAssistantFormProps) => {
                     });
 
                     const json: DBFile = await response.json();
-                    console.log(json);
 
                     form.setValue("fileId", json.id);
                     form.setValue("fileName", json.name);

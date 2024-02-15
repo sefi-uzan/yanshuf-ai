@@ -10,7 +10,7 @@ import DashboardNavItem from "./DashboardNavItem";
 const dashboardNavItems = [
   {
     name: "Chats",
-    href: "/dashboard/",
+    href: "/dashboard/threads",
   },
   {
     name: "Assistants",
