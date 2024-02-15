@@ -4,6 +4,7 @@ import { Messages } from "@/types/types";
 import { Skeleton } from "@/app/components/ui/skeleton";
 import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
 import { ChatContext } from "./ChatContext";
+import { sanitizeAndStyleHTML } from "@/lib/utils";
 
 const Messages = () => {
   const { threadId } = useContext(ChatContext);
@@ -14,7 +15,11 @@ const Messages = () => {
 
   useEffect(() => {
     if (dbMessages) {
-      setMessages(dbMessages);
+      const sanitizedMessages = dbMessages.map((message) => ({
+        ...message,
+        content: sanitizeAndStyleHTML(message.content),
+      }));
+      setMessages(sanitizedMessages);
     } else {
       setMessages(undefined);
     }
@@ -29,7 +34,6 @@ const Messages = () => {
             <Skeleton className="h-[100px]" />
             <Skeleton className="h-[100px]" />
             <Skeleton className="h-[100px]" />
-            <Skeleton className="h-[100px]" />
           </div>
         ) : (
           messages?.map((message, index) => {
@@ -37,7 +41,9 @@ const Messages = () => {
               <Card key={index} className="w-fit border-0">
                 <CardHeader className="p-2">{message.role}</CardHeader>
                 <CardContent
-                  dangerouslySetInnerHTML={{ __html: message.content }}
+                  dangerouslySetInnerHTML={{
+                    __html: message.content.join(" "),
+                  }}
                 />
               </Card>
             );

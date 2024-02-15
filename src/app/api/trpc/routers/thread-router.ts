@@ -1,6 +1,7 @@
 import { privateProcedure, router } from "@/app/api/trpc/trpc";
 import { db } from "@/db";
 import { openai } from "@/lib/openai";
+import { sleep } from "@/lib/utils";
 import { z } from "zod";
 
 export const threadRouter = router({
@@ -118,6 +119,17 @@ export const threadRouter = router({
 
       console.log("db message created");
 
+      let status = "queued";
+
+      while (status === "queued" || status === "in_progress") {
+        const run = await openai.beta.threads.runs.retrieve(
+          input.threadId,
+          openaiRun.id
+        );
+        status = run.status;
+        await sleep(3000);
+      }
+
       return message;
     }),
   list: privateProcedure.query(async ({ ctx }) => {
@@ -133,7 +145,7 @@ export const threadRouter = router({
   }),
   getThread: privateProcedure
     .input(z.object({ threadId: z.string().nullable() }))
-    .query(({ input }) => {
+    .mutation(({ input }) => {
       const { threadId } = input;
 
       if (!threadId) {

@@ -3,8 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAuthSession } from "@/config/auth-options";
 
 import OpenAI from "openai";
-import { db } from "@/db";
-import { DBFile } from "@/types/types";
 
 export const POST = async (req: NextRequest) => {
   const openai = new OpenAI();

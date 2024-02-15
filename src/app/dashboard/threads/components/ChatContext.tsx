@@ -37,15 +37,24 @@ export const ChatContextProvider = ({ children }: Props) => {
   const [assistantId, setAssistantId] = useState<string>();
   const [threadId, setThreadId] = useQueryState("threadId");
 
-  const { data: thread } = trpc.thread.getThread.useQuery({
-    threadId,
-  });
+  const { mutate: getThread } = trpc.thread.getThread.useMutation();
 
   useEffect(() => {
-    if (thread?.assistantId) {
-      setAssistantId(thread.assistantId);
+    if (threadId) {
+      getThread(
+        {
+          threadId,
+        },
+        {
+          onSuccess(data) {
+            if (data?.assistantId) {
+              setAssistantId(data.assistantId);
+            }
+          },
+        }
+      );
     }
-  }, [thread]);
+  }, [getThread, threadId]);
 
   const { mutate: createAndRun } = trpc.thread.createAndRun.useMutation();
   const { mutate: runThread } = trpc.thread.runThread.useMutation();
@@ -96,6 +105,7 @@ export const ChatContextProvider = ({ children }: Props) => {
               variant: "default",
             });
             setMessage("");
+            utils.message.list.refetch();
           },
           onError: (err) => {
             toast({

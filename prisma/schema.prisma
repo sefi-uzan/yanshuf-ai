@@ -65,7 +65,7 @@ model Assistant {
   description  String?
   instructions String?
 
-  file   File?   @relation(fields: [fileId], references: [id])
+  file   File?   @relation(fields: [fileId], references: [id], onDelete: Cascade)
   fileId String? @unique
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

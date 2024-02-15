@@ -9,11 +9,12 @@ export default function Home() {
   return (
     <MaxWidthWrapper className="mb-12 mt-12 sm:mt-40 flex flex-col items-center justify-center text-center">
       <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-        Enhance your <span className="text-blue-600">tests</span> in seconds.
+        Create your bespoke <span className="text-blue-600">AI assistant</span>{" "}
+        in seconds.
       </h1>
       <p className="mt-5 max-w-prose sm:text-lg">
-        Yanshuf.ai is your very own QA agent, streamlining your QA proccesses
-        and helping you test better
+        Yanshuf.ai is a platform designed to help you create your own AI
+        assistants tailored to your needs and specifications.
       </p>
 
       <Link
@@ -47,13 +48,13 @@ export default function Home() {
               <div className="mt-16 flow-root sm:mt-24">
                 <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
                   <Image
-                    src="/dashboard-preview.jpg"
+                    src="/assistants-preview.jpg"
                     alt="product preview"
                     priority={true}
                     width={1364}
                     height={866}
                     quality={100}
-                    className="rounded-md bg-white p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10"
+                    className=""
                   />
                 </div>
               </div>
@@ -80,10 +81,10 @@ export default function Home() {
         <div className="mb-12 px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center">
             <h2 className="mt-2 font-bold text-4xl sm:text-5xl">
-              Start testing in minutes
+              Start chatting in minutes
             </h2>
             <p className="mt-4 text-lg">
-              Testing has never been easier than with Yanshuf.ai.
+              Your bespoke AI assistant is ready for you.
             </p>
           </div>
         </div>
@@ -112,11 +113,10 @@ export default function Home() {
             <div className="flex flex-col space-y-2 border-l-4 border-primary-foreground py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium text-blue-600">Step 2</span>
               <span className="text-xl font-semibold">
-                Integrate with your existing software
+                Create your personal assistant
               </span>
               <span className="mt-2 ">
-                We&apos;ll process all your information and make it ready for
-                you to chat about.
+                You can set your own custom instructions and even upload files.
               </span>
             </div>
           </li>
@@ -138,12 +138,12 @@ export default function Home() {
           <div className="mt-16 flow-root sm:mt-24">
             <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
               <Image
-                src="/file-upload-preview.jpg"
+                src="/chats-preview.jpg"
                 alt="uploading preview"
                 width={1419}
                 height={732}
                 quality={100}
-                className="rounded-md bg-white p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10"
+                className=""
               />
             </div>
           </div>

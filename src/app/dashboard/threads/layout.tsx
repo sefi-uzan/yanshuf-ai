@@ -14,11 +14,11 @@ export default async function Layout({
       <div className="p-6">
         <div className="space-y-0.5">
           <div className="flex flex-row justify-start items-center space-x-4">
-            <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
+            <h2 className="text-2xl font-bold tracking-tight">Chats</h2>
             <div className="md:hidden block"></div>
           </div>
           <p className="text-muted-foreground">
-            Manage your account settings and set e-mail preferences.
+            This is where you can chat with your created assistants.
           </p>
         </div>
         <div

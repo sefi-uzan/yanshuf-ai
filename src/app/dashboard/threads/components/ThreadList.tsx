@@ -11,13 +11,14 @@ const ThreadList = () => {
 
   const { setThreadId, threadId, setAssistantId } = useContext(ChatContext);
 
+
   return (
     <aside className=" w-1/4">
       <nav className="flex flex-col space-y-4 mr-4">
         <Button
-          variant={threadId === "" ? "default" : "outline"}
+          variant={threadId === null ? "default" : "outline"}
           onClick={() => {
-            setThreadId("");
+            setThreadId(null);
             setAssistantId("");
           }}
         >
