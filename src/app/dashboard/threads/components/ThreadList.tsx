@@ -5,6 +5,7 @@ import { Button } from "@/app/components/ui/button";
 import { Skeleton } from "@/app/components/ui/skeleton";
 import { useContext } from "react";
 import { ChatContext } from "./ChatContext";
+import { ScrollArea } from "@/app/components/ui/scroll-area";
 
 const ThreadList = () => {
   const { data: threads, isLoading } = trpc.thread.list.useQuery();
@@ -13,7 +14,7 @@ const ThreadList = () => {
     useContext(ChatContext);
 
   return (
-    <aside className="w-1/4 overflow-y-auto">
+    <ScrollArea className="w-1/4">
       <nav className="flex flex-col space-y-4 mr-4 ">
         <Button
           variant={threadId === null ? "default" : "outline"}
@@ -46,7 +47,7 @@ const ThreadList = () => {
           })
         )}
       </nav>
-    </aside>
+    </ScrollArea>
   );
 };
 

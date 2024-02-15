@@ -12,6 +12,7 @@ import {
 import TableRowContextMenu from "./TableRowContextMenu";
 import CreateAssistantButton from "./CreateAssistantButton";
 import { Ghost, Loader2 } from "lucide-react";
+import { ScrollArea } from "@/app/components/ui/scroll-area";
 
 export const settingsNavItems = [
   {
@@ -27,14 +28,14 @@ const AssistantTable = () => {
   const { data, isLoading } = trpc.assistant.list.useQuery();
 
   return (
-    <>
+    <ScrollArea className="h-[calc(100vh-18rem)]">
       {isLoading ? (
         <Loader2 className="h-4 w-4 animate-spin justify-center mx-auto" />
       ) : (
         <>
           {data?.length != 0 ? (
             <Table>
-              <TableHeader>
+              <TableHeader className="sticky top-0 bg-background">
                 <TableRow>
                   <TableHead className="w-1/8">Name</TableHead>
                   <TableHead className="w-1/2">Instructions</TableHead>
@@ -71,7 +72,7 @@ const AssistantTable = () => {
           )}
         </>
       )}
-    </>
+    </ScrollArea>
   );
 };
 

@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
 import { ChatContext } from "./ChatContext";
 import { sanitizeAndStyleHTML } from "@/lib/utils";
 import { Separator } from "@/app/components/ui/separator";
+import { ScrollArea } from "@/app/components/ui/scroll-area";
 
 const Messages = () => {
   const { threadId } = useContext(ChatContext);
@@ -27,7 +28,7 @@ const Messages = () => {
   }, [threadId, dbMessages]);
 
   return (
-    <div className="h-[calc(100vh-24rem)] overflow-y-auto flex flex-col pb-4 w-full px-2">
+    <ScrollArea className="h-[calc(100vh-24rem)] flex flex-col pb-4 w-full px-2">
       <div className="flex flex-col-reverse flex-grow gap-y-4">
         {isLoading ? (
           <div className="space-y-4">
@@ -53,7 +54,7 @@ const Messages = () => {
           })
         )}
       </div>
-    </div>
+    </ScrollArea>
   );
 };
 
