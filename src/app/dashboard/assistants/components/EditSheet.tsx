@@ -166,7 +166,6 @@ const EditAssistantForm = ({ assistant, setOpen }: EditAssistantFormProps) => {
                         });
 
                         const json: DBFile = await response.json();
-                        console.log(json);
 
                         form.setValue("fileId", json.id);
                         form.setValue("fileName", json.name);

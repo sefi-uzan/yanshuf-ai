@@ -19,8 +19,11 @@ type DBFile = {
   createdAt: Date;
   updatedAt: Date;
 };
-
-type Messages = RouterOutput["messages"]["getMessages"]["messages"];
+type StrippedMessage = {
+  role: "user" | "assistant";
+  content: MessageContentText.Text;
+};
+type Messages = RouterOutput["message"]["list"];
 type Assistant = RouterOutput["assistant"]["create"];
 
 type OmitText = Omit<Messages[number], "text">;
