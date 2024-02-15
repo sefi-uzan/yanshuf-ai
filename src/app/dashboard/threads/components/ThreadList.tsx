@@ -5,7 +5,6 @@ import { Button } from "@/app/components/ui/button";
 import { Skeleton } from "@/app/components/ui/skeleton";
 import { useContext } from "react";
 import { ChatContext } from "./ChatContext";
-import { set } from "date-fns";
 
 const ThreadList = () => {
   const { data: threads, isLoading } = trpc.thread.list.useQuery();
