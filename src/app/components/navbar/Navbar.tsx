@@ -8,6 +8,8 @@ import MobileNav from "./MobileNav";
 import NavbarItem from "./NavbarItem";
 import { navbarItems } from "./NavbarItems";
 import UserAccountNav from "./UserAccountNav";
+import Image from "next/image";
+import logo from "../../../../public/logo.svg";
 
 const Navbar = async () => {
   const session = await getAuthSession();
@@ -17,13 +19,19 @@ const Navbar = async () => {
   return (
     <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full backdrop-blur-lg transition-all mb-2 border-b">
       <MaxWidthWrapper>
-        <div className="flex h-14 items-center justify-between">
+        <div className="flex h-14 justify-between">
           <Link
             href="/"
-            className="flex z-40 font-semibold"
+            className="flex z-40 font-semibold items-center"
             data-testid="navbar-title"
           >
-            <span>Yanshuf.ai</span>
+            <Image
+              priority
+              src={logo}
+              alt="Yanshuf.ai logo"
+              className="dark:invert"
+            />
+            Yanshuf.ai
           </Link>
           <div className="flex flex-row justify-between items-center">
             <ModeToggle />
