@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
-import DashboardNavItem from "../../components/navigation/DashboardNavItem";
+import DashboardNavItem from "@/app/components/pages/dashboard/navigation/DashboardNavItem";
 import { settingsNavItems } from "./SettingsNav";
 import { usePathname } from "next/navigation";
 import { buttonVariants } from "@/app/components/ui/button";
@@ -46,6 +46,5 @@ const SettingsMobileNav = () => {
     </DropdownMenu>
   );
 };
-
 
 export default SettingsMobileNav;

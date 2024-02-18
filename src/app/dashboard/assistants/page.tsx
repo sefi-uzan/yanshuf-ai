@@ -1,4 +1,4 @@
-import AssistantTable from "./components/AssistantTable";
+import AssistantTable from "@/app/components/pages/dashboard/assistants/AssistantTable";
 
 const Page = () => {
   return <AssistantTable />;

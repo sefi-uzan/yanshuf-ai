@@ -1,5 +1,5 @@
-import AssistantTable from "./components/AssistantTable";
-import CreateAssistantButton from "./components/CreateAssistantButton";
+import AssistantTable from "@/app/components/pages/dashboard/assistants/AssistantTable";
+import CreateAssistantButton from "@/app/components/pages/dashboard/assistants/CreateAssistantButton";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

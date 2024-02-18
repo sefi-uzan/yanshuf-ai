@@ -1,5 +1,5 @@
-import SettingsMobileNav from "./components/SettingsMobileNav";
-import SettingsNav from "./components/SettingsNav";
+import SettingsMobileNav from "@/app/components/pages/dashboard/settings/navigation/SettingsMobileNav";
+import SettingsNav from "@/app/components/pages/dashboard/settings/navigation/SettingsNav";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

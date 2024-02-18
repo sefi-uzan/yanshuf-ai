@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "../components/ui/tooltip";
 import { buttonVariants } from "../components/ui/button";
-import UpgradeButton from "./components/UpgradeButton";
+import UpgradeButton from "@/app/components/pages/pricing/UpgradeButton";
 
 const Page = async () => {
   const session = await getAuthSession();

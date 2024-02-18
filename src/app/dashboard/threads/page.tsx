@@ -1,7 +1,7 @@
 "use client";
-import { ChatContextProvider } from "./components/ChatContext";
-import ChatWrapper from "./components/ChatWrapper";
-import ThreadList from "./components/ThreadList";
+import { ChatContextProvider } from "@/app/components/pages/dashboard/threads/ChatContext";
+import ChatWrapper from "@/app/components/pages/dashboard/threads/ChatWrapper";
+import ThreadList from "@/app/components/pages/dashboard/threads/ThreadList";
 
 const Page = () => {
   return (

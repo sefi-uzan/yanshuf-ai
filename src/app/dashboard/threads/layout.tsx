@@ -1,5 +1,4 @@
 import { getAuthSession } from "@/config/auth-options";
-import ThreadList from "./components/ThreadList";
 
 export default async function Layout({
   children,

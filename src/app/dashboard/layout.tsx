@@ -1,6 +1,6 @@
 import { getAuthSession } from "@/config/auth-options";
 import MaxWidthWrapper from "../components/providers/MaxWidthWrapper";
-import DashboardNav from "./components/navigation/DashboardNav";
+import DashboardNav from "@/app/components/pages/dashboard/navigation/DashboardNav";
 
 export default async function Layout({
   children,
