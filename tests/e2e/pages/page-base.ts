@@ -1,6 +1,6 @@
 import { Page } from "@playwright/test";
-import { Navbar } from "./home/navbar";
-import { HomePage } from "./home/home-page";
+import { Navbar } from "./navbar";
+import { HomePage } from "./home-page";
 
 export class PageBase {
   public readonly navbar: Navbar;

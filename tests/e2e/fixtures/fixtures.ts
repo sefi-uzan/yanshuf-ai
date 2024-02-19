@@ -1,12 +1,14 @@
 import { test as base } from "@playwright/test";
 import { PageBase } from "../pages/page-base";
-import { HomePage } from "../pages/home/home-page";
+import { HomePage } from "../pages/home-page";
 import { Website } from "../pages/website";
+import { PricingPage } from "../pages/pricing";
 
 type SiteFixture = {
   pageBase: PageBase;
   website: Website;
   homePage: HomePage;
+  pricingPage: PricingPage;
 };
 
 export const test = base.extend<SiteFixture>({
@@ -29,5 +31,10 @@ export const test = base.extend<SiteFixture>({
     const homePage = await website.gotoHomePage();
 
     await use(homePage);
+  },
+  pricingPage: async ({ website }, use) => {
+    const pricingPage = await website.gotoPricingPage();
+
+    await use(pricingPage);
   },
 });

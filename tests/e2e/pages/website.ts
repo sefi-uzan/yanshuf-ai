@@ -1,7 +1,8 @@
 import { Page } from "@playwright/test";
 import { userCookies } from "../fixtures/config";
-import { HomePage } from "./home/home-page";
+import { HomePage } from "./home-page";
 import { PageBase } from "./page-base";
+import { PricingPage } from "./pricing";
 
 export class Website extends PageBase {
   constructor(page: Page) {
@@ -18,5 +19,12 @@ export class Website extends PageBase {
     await homepage.goto();
 
     return homepage;
+  }
+  public async gotoPricingPage(): Promise<PricingPage> {
+    const pricingpage = new PricingPage(this.page);
+
+    await pricingpage.goto();
+
+    return pricingpage;
   }
 }

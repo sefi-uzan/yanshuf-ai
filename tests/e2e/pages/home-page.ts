@@ -1,5 +1,5 @@
 import { Page } from "@playwright/test";
-import { PageBase } from "../page-base";
+import { PageBase } from "./page-base";
 
 export class HomePage extends PageBase {
   constructor(page: Page) {
@@ -8,6 +8,5 @@ export class HomePage extends PageBase {
 
   public async goto(): Promise<void> {
     await this.page.goto("/");
-
   }
 }

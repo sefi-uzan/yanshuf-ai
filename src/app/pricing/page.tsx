@@ -100,6 +100,7 @@ const Page = async () => {
               return (
                 <div
                   key={plan}
+                  data-testid={`pricing-item-${plan.toLowerCase()}`}
                   className={cn("relative rounded-2xlshadow-lg", {
                     "border-2 border-blue-600 shadow-blue-200": plan === "Pro",
                     "border-primary dark:border-secondary border-2":
@@ -188,7 +189,7 @@ const Page = async () => {
                           variant: "secondary",
                         })}
                       >
-                        {session ? "Upgrade now" : "Sign up"}
+                        {session ? "Start chatting" : "Sign up"}
                         <ArrowRight className="h-5 w-5 ml-1.5" />
                       </Link>
                     ) : session ? (
