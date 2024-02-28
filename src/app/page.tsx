@@ -1,11 +1,14 @@
+"use client";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import Image from "next/image";
 import MaxWidthWrapper from "./components/providers/MaxWidthWrapper";
-import { buttonVariants } from "./components/ui/button";
+import { Button, buttonVariants } from "./components/ui/button";
+import { trpc } from "./_trpc/client";
 
 export default function Home() {
+  const { mutate } = trpc.facebook.facebookScrape.useMutation();
   return (
     <MaxWidthWrapper className="mb-12 mt-12 sm:mt-40 flex flex-col items-center justify-center text-center">
       <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
@@ -17,16 +20,15 @@ export default function Home() {
         assistants tailored to your needs and specifications.
       </p>
 
-      <Link
+      <Button
         className={buttonVariants({
           size: "lg",
           className: "mt-5",
         })}
-        href="/dashboard"
-        target="_blank"
+        onClick={() => mutate()}
       >
-        Get started <ArrowRight className="ml-2 h-5 w-5" />
-      </Link>
+        <ArrowRight className="ml-2 h-5 w-5" />
+      </Button>
 
       <div>
         <div className="relative isolate">
