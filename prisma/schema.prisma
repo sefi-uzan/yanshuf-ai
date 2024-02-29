@@ -121,7 +121,7 @@ enum Role {
 model Message {
   id String @id
   role Role
-  content String
+  content String @db.Text
 
   thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
   threadId String

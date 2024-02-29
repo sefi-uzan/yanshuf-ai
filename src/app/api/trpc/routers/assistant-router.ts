@@ -19,7 +19,7 @@ export const assistantRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
       const { name, description, instructions, fileId } = input;
-      const modifiedInstructions = `Please reply using markdown, with proper styling and spacing between elements, make your reply clear and consice and ask clarification questions if you need to, also follow the attached user instructions: ${instructions}`;
+      const modifiedInstructions = `Please reply only with the json object requested from you do not wrap it in anything, no markdown, no html, just an array of objects, I will be treating it as such, make your reply clear and consice and ask clarification questions if you need to, also follow the attached user instructions: ${instructions}`;
       let assistant = await openai.beta.assistants.create({
         instructions: modifiedInstructions,
         name,
