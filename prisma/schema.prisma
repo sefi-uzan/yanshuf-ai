@@ -50,6 +50,8 @@ model User {
 
   accounts   Account[]
   sessions   Session[]
+  assistants Assistant[]
+  threads    Thread[]
 
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
@@ -57,3 +59,79 @@ model User {
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 }
 
+model Assistant {
+  id           String  @id
+  name         String
+  description  String?
+  instructions String? @db.Text
+
+  file   File?   @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  fileId String? @unique
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  threads Thread[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([fileId])
+  @@index([userId])
+}
+
+model File {
+  id   String @id
+  name String
+  url  String
+  size Int
+
+  messages Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Assistant Assistant?
+}
+
+model Thread {
+  id String @id
+  runId String @unique
+  name String
+
+  Message Message[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  assistant Assistant @relation(fields: [assistantId], references: [id], onDelete: Cascade)
+  assistantId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([assistantId])
+}
+
+enum Role {
+  assistant
+  user
+}
+model Message {
+  id String @id
+  role Role
+  content String
+
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  threadId String
+
+  file File? @relation(fields: [fileId], references: [id])
+  fileId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([threadId])
+  @@index([fileId])
+}
