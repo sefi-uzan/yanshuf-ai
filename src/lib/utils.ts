@@ -35,6 +35,12 @@ export function sanitizeAndStyleHTML(htmlContent: string[]) {
   return content;
 }
 
+export function addStyleToCodeBlock(element: HTMLElement) {
+  const codeBlocks = element.querySelectorAll(".language-json");
+
+  codeBlocks.forEach((block) => {});
+}
+
 export function constructMetadata({
   title = "Yanshuf.ai - Your personal AI assistant",
   description = "Yanshuf.ai is a bespoke AI assistant service",

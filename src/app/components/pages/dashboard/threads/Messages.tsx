@@ -45,8 +45,9 @@ const Messages = () => {
                   {message.role}:
                 </CardHeader>
                 <CardContent
+                  className=""
                   dangerouslySetInnerHTML={{
-                    __html: message.content.join(" "),
+                    __html: message.content[0],
                   }}
                 />
               </Card>

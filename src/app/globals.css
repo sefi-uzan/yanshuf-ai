@@ -79,3 +79,9 @@
 .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
   border-radius: 7px;
 }
+
+.language-json{
+  /* width:  500px !important; */
+  text-wrap: wrap;
+  display: flex;
+}
